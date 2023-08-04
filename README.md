@@ -8,24 +8,6 @@ Coordinate, connect and nurture relationships all in one meeting lifecycle platf
 
 ---
 
-# Team Members
-
-
-- **[Satish Ojha](https://github.com/satishkumarojha)**
-- **[Tushar Shelke](https://github.com/tushar07-dev)**
-- **[Swapnil Ramteke](https://github.com/swapnilpreet)**
-- **[Nikhil Mehra](https://github.com/NikhilMehara)**
-- **[Shubham Verma](https://github.com/S-hub1996)**
-
----
-# ✨DEPLOYMENT LINK :
-
-
-### **[Calendary](https://calendly.com/)** : https://calendly.com/
-
-### **[Netlify Clone ](https://calendly-react-clone.netlify.app/)** : https://calendly-react-clone.netlify.app/
----
-
 # For building this application we used Following Tech Stack:
 <ul>
 <li>Redux</li>
@@ -77,16 +59,3 @@ Coordinate, connect and nurture relationships all in one meeting lifecycle platf
 <li>Slot Booking/Form Page</li>
 
 <div margin="auto" justifyContent="center"><img src="https://miro.medium.com/max/1400/1*pV3o8bw1Z6IYiJkz8xNj5Q.jpeg"/></div>
-
-</ol>
-
-
-# Challenges
-<ol>
-<li>As every journey has some challenges and so was ours. Being a Team Leader I break the project into small Chunks and decided to distribute it according to the capability of an individual.
-I list out some of the milestones in the project that will help us to learn something different.</li>
-<li>We faced some problems during merging the files but we figured it out very quickly and start following the basic steps of merging.</li>
-<li>We faced challenges with Chakra UI like absolute and relative. Some of the files got dull CSS so we changed some classes and tags and build an eye catching UI.</li>
-</ol>
----
-# calendly-clone
