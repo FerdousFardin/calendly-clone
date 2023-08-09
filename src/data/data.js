@@ -1,6 +1,5 @@
 import { Solution } from "../components/Home/Solution"
 
-// brand careousel
 export const brandData = [
     {
         image:"https://images.ctfassets.net/k0lk9kiuza3o/42drnxHfXrNOGKnVE9iA3r/7a7cf32f65bd03e0d1d48a6b02bde3d5/Loreal__1_.svg"
@@ -29,37 +28,37 @@ export const brandData = [
 ]
 export const SolutionCardsData = [
 {
-    logo:"https://i.ibb.co/NNFdxYY/Screenshot-4.png",
+    // logo:"file:///C:/Users/mahta/Downloads/undraw_business_chat_re_gg4h.svg",
     heading:"Sales",
     text:"Spend more time selling, and less time on admin. Shorten your sales cycle by letting prospects schedule while they’re in peak buying mode."
 
 },
 {
-    logo:"https://i.ibb.co/MspCx5h/Screenshot-5.png",
+    // logo:"https://i.ibb.co/MspCx5h/Screenshot-5.png",
     heading:"Marketing",
     text:"Spend more time selling, and less time on admin. Shorten your sales cycle by letting prospects schedule while they’re in peak buying mode."
     
 },
 {
-    logo:"https://i.ibb.co/k1XHLr5/Screenshot-6.png",
+    // logo:"https://i.ibb.co/k1XHLr5/Screenshot-6.png",
     heading:"Customer Success",
     text:"Offer exceptional support: Your clients will be delighted with one-click scheduling and increased responsiveness. "
     
 },
 {
-    logo:"https://i.ibb.co/bQXCzkK/Screenshot-7.png",
+    // logo:"https://i.ibb.co/bQXCzkK/Screenshot-7.png",
     heading:"Revenue Operations",
     text:"Streamline meeting and activity data. Calendly’s native integrations with Salesforce and HubSpot ensure up-to-date reporting. "
     
 },
 {
-    logo:"https://i.ibb.co/jvDTxWN/Screenshot-8.png",
+    // logo:"https://i.ibb.co/jvDTxWN/Screenshot-8.png",
     heading:"Recruiting",
     text:"Simplify recruitment by smoothing every aspect of the interview scheduling process, including automated follow-ups."
     
 },
 {
-    logo:"https://i.ibb.co/0K1kYcB/Screenshot-9.png",
+    // logo:"https://i.ibb.co/0K1kYcB/Screenshot-9.png",
     heading:"Information Technology",
     text:"Increase scheduling productivity across your org while maintaining full security and control over users."
     

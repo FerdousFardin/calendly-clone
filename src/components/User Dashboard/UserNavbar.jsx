@@ -79,9 +79,7 @@ const navigate = useNavigate();
                   Availabilty
                 </Button>
               </Link>
-              <Button bg={"none"} fontWeight={"semibold"}>
-                Integration
-              </Button>
+              
               <Button
                 bg={"none"}
                 fontWeight={"semibold"}
@@ -138,30 +136,15 @@ const navigate = useNavigate();
                   </Box>{" "}
                   Account Settings
                 </MenuItem>
-                <MenuItem>
-                  <Box marginRight={4}>
-                    <ImCreditCard size={15} />
-                  </Box>
-                  Billing
-                </MenuItem>
+                
                 <MenuItem>
                   <Box marginRight={3}>
                     <AiTwotoneCalendar size={18} />
                   </Box>
                   Calender Connections
                 </MenuItem>
-                <MenuItem>
-                  <Box marginRight={3}>
-                    <MdPeople size={18} />
-                  </Box>
-                  Admin Management
-                </MenuItem>
-                <MenuItem>
-                  <Box marginRight={3}>
-                    <BsFillLockFill size={18} />
-                  </Box>
-                  Organisation Settings
-                </MenuItem>
+                
+                
                 <MenuItem>
                   <Box marginRight={3}>
                     <BsLink45Deg size={18} />

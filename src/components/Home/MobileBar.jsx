@@ -33,7 +33,7 @@ export const MobileBar = () => {
           lineHeight={9}
           textAlign={'left'}
         >
-          Time is a precious commodity. Calendly is the courteous way to book
+          Time is a precious commodity. Scheduler is the courteous way to book
           meetings and other appointments, because scheduling with just a few
           clicks makes the most of everyone's time.
         </Text>

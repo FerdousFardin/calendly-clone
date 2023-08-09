@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
-import { Box, Flex, Heading, VStack,Image,Text } from "@chakra-ui/react";
+import {Flex, Heading, VStack,Image,Text } from "@chakra-ui/react";
 import 'aos/dist/aos.css';
 export const Reminder = () => {
     useEffect(()=>{
@@ -16,7 +16,7 @@ export const Reminder = () => {
           <Text fontSize={'0.8em'}>Automate reminders and follow-ups</Text>
         </Heading >
         <Text color={'gray.600'} fontWeight={'medium'} fontSize={'1.2em'} width={{base:"100%",md:'78%'}} textAlign={{base:"left",md:'justify'}}>
-          Calendly puts your entire meeting workflow on autopilot, sending
+          Scheduler puts your entire meeting workflow on autopilot, sending
           everything from reminder emails to thank you notes, so you can focus
           on the work only you can do. It’s like getting an assistant, even if
           you’re a business of one.

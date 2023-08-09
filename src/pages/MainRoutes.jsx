@@ -1,7 +1,7 @@
 import React from 'react'
 import {Routes,Route} from 'react-router-dom';
 import Calendar2 from '../components/Calendar/Calendar2';
-import Customers from './Customers';
+// import Customers from './Customers';
 import { Home } from './Home';
 import {Home as UserHome} from '../components/User Dashboard/UserHome';
 import Individuals from './Indiviuals';
@@ -20,7 +20,7 @@ export const MainRoutes = () => {
      <Route path='/' element={<Home/>}/>
      <Route path='/individuals' element={<Individuals/>}/>
      <Route path='/teams' element={<Teams/>}/>
-     <Route path='/customer' element={<Customers/>}/>
+     {/* <Route path='/customer' element={<Customers/>}/> */}
      <Route path='/userevent/userhome' element={<UserHome/>}/>
      <Route path='/userevent/userhome/eventtype' element={<EventTypes/>}/>
      <Route path='/userevent/userhome/scheduledevents' element={<ScheduledEvents/>}/>

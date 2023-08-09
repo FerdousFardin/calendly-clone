@@ -74,24 +74,8 @@ import {
                 We take the work out of connecting with others so you can accomplish more.
                 </Text>
               </Box>
-              <Stack direction={'row'} marginBottom={"20px"}>
-                <Select
-                  placeholder={'English'}
-                  width={250}
-                  bg={useColorModeValue('white', 'whiteAlpha.100')}
-                  border={"1px solid black"}
-                  _focus={{
-                    bg: 'whiteAlpha.300',
-                  }}
-                >
-                  <option value='Francis'>Francis</option>
-                  <option value='Protegue'>Protegue</option>
-                </Select>
-              </Stack>
-              <Stack direction={'row'} spacing={6} marginBottom={"20px"}>
-                <Image src='https://assets-marketing-site.calendly.com/static/AppStore-15f01eefb2013206cc7e26d98fbe95fb.svg' style={{cursor:"pointer"}}/>
-                <Image src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTl1ANbjwIzvXX4YpXZT6Nt3TiRUsMlqrZ3xg&usqp=CAU' width="135px"  style={{borderRadius:"5px",cursor:"pointer"}}/>
-              </Stack>
+              
+
               <Stack direction={'row'} spacing={6} marginBottom={"10px"}>
                 <SocialButton label={'Twitter'} href={'#'}>
                   <FaTwitter />
@@ -105,9 +89,6 @@ import {
                 <SocialButton label={'Instagram'} href={'#'}>
                   <FaLinkedinIn />
                 </SocialButton>
-                <SocialButton label={'Instagram'} href={'#'}>
-                  <FiYoutube />
-                </SocialButton>
               </Stack>
             </Stack>
             <SimpleGrid
@@ -118,32 +99,26 @@ import {
              >
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"} fontFamily={"revert-layer"}>About</Heading></ListHeader>
-              <Link href={'#'}>About Calendly</Link>
+              <Link href={'#'}>About Scheduler</Link>
               <Link href={'#'}>Contact Sales</Link>
-              <Link href={'#'}>Newsrooms</Link>
-              <Link href={'#'}>Careers</Link>
               <Link href={'#'}>Security</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Solutions</Heading></ListHeader>
-              <Link href={'#'}>Customer Success</Link>
+              <Link href={'#'}>Customer Support</Link>
               <Link href={'#'}>Sales</Link>
-              <Link href={'#'}>Recruiting</Link>
-              <Link href={'#'}>Information Technology</Link>
               <Link href={'#'}>Marketing</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Popular Features</Heading></ListHeader>
-              <Link href={'#'}>Embeded Calendly</Link>
-              <Link href={'#'}>Availability</Link>
+              <Link href={'#'}>Embeded Scheduler</Link>
               <Link href={'#'}>Sending Notifications</Link>
-              <Link href={'#'}>Using Calendly Mobile</Link>
+              <Link href={'#'}>Using Scheduler Mobile</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Support</Heading></ListHeader>
               <Link href={'#'}>Help Center</Link>
               <Link href={'#'}>Video Tutorials</Link>
-              <Link href={'#'}>Cookies Settings</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Add-Ons</Heading></ListHeader>

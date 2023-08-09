@@ -1,6 +1,6 @@
 import React from 'react'
-import Part1 from '../components/Customers/Part1'
-import Part3 from "../components/Customers/Part3"
+// import Part1 from '../components/Customers/Part1'
+// import Part3 from "../components/Customers/Part3"
 import { Grid, VStack, HStack, Center, Flex, Spacer } from "@chakra-ui/react";
 // import { CgChevronLeft, CgChevronRight } from 'react-icons/cg';
 

@@ -5,8 +5,6 @@ import {
   Heading,
   Text,
   Stack,
-  Image,
-  Avatar,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { CheckCircleIcon } from '@chakra-ui/icons'
@@ -37,7 +35,7 @@ export default function HomeCards() {
             Create simple rules
           </Heading>
           <Text color={'gray.500'} fontSize={'xl'} textAlign={"left"} pr={"10px"}>
-          Let Calendly know your availability preferences and it'll do the work for you.
+          Let Scheduler know your availability preferences and it'll do the work for you.
           </Text>
         </Stack>
       </Box>

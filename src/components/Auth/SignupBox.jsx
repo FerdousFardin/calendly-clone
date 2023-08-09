@@ -3,14 +3,11 @@ import {
     Button,
     FormControl,
     Flex,
-    Heading,
     Input,
     Stack,
-    Text,
     useColorModeValue,
   } from '@chakra-ui/react';
   import { FcGoogle } from 'react-icons/fc';
-  import {BsMicrosoft} from 'react-icons/bs'
   export default function SignupBox({loginWithGoogle,log}) {
     return (
       <Flex
@@ -54,17 +51,6 @@ import {
                 color:'blue.400'
               }}>
             {log} with Google
-            </Button>
-            <Button
-              bg={'white'}
-              variant={'outline'}
-              colorScheme='blue.900' 
-              color={'blue.900'}
-              leftIcon={<BsMicrosoft />}
-              _hover={{
-                color:'blue.400'
-              }}>
-             {log} with Microsoft
             </Button>
           </Stack>
         </Stack>

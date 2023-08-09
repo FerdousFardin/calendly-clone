@@ -31,10 +31,10 @@ const EventForm = () => {
           {"< Back"}
         </Button>
         <Heading fontWeight={"normal"}>Add Event Type</Heading>
-        <Flex gap={2}>
+        {/* <Flex gap={2}>
           <Text>Your Event Type is</Text>
           <Switch id="email-alerts" />
-        </Flex>
+        </Flex> */}
       </Flex>
       <hr />
       <FormControl border={"1px solid"} p={8}>
@@ -55,13 +55,12 @@ const EventForm = () => {
         <FormLabel>Event Name</FormLabel>
         <Input type="email" isRequired />
         <FormHelperText>We'll never share your email.</FormHelperText>
-        <FormLabel>Location</FormLabel>
+        <FormLabel>Select Platform</FormLabel>
         <Input type="text" isRequired />
         <FormLabel>Event Type</FormLabel>
         <Select placeholder="Select event Type">
           <option value="option1">One-on-One</option>
           <option value="option2">Group</option>
-          <option value="option3">Collective</option>
         </Select>
         <FormLabel>Description/Instructions</FormLabel>
         <Textarea type="textBox" isRequired minHeight={40} />

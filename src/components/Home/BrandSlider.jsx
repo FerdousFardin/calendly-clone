@@ -5,15 +5,14 @@ export const BrandSlider = () => {
   return (
     <VStack bg={"#F8F8F8"} spacing={14} py={{ base: "55px", md: "120px" }}>
       <Heading>
-        <Text>Simplified scheduling for more than</Text>
+        <Text>Simplified scheduling for </Text>
         <Text align={"center"}>
           <Text as={"span"} color={"#006BFF"}>
-            10,000,000
+            worldwide
           </Text>{" "}
-          users worldwide
+          users 
         </Text>
       </Heading>
-      <Image src="https://i.ibb.co/3k8gB3f/Screenshot-13.png" alt="banner" />
     </VStack>
   );
 };

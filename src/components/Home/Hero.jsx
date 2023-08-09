@@ -9,7 +9,6 @@ import {
   Button,
   Image,
   Icon,
-  IconButton,
   createIcon,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -20,7 +19,6 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
   useDisclosure,
@@ -106,7 +104,7 @@ export default function Hero() {
               </Text>
             </Heading>
             <Text color={"gray.500"} fontSize={"1.7em"}>
-              Calendly is your hub for scheduling <br /> meetings professionally
+              Scheduler is your hub for scheduling <br /> meetings professionally
               and efficiently,
               <br /> eliminating the hassle of back-and-forth <br />
               emails so you can get back to work.
@@ -127,7 +125,7 @@ export default function Hero() {
                   outline={"none"}
                 />
                 <Button
-                  zIndex={3}
+                  zIndex={1}
                   top={0}
                   right={"22%"}
                   position={"absolute"}

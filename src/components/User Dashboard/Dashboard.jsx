@@ -2,24 +2,18 @@ import { ReactNode } from "react";
 import {
   Box,
   Flex,
-  Avatar,
   HStack,
   VStack,
-  //   Link,
-  IconButton,
   Button,
   Menu,
   MenuButton,
   MenuList,
   MenuItem,
-  MenuDivider,
-  useDisclosure,
   useColorModeValue,
-  Stack,
   Heading,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import { HamburgerIcon, CloseIcon, AddIcon } from "@chakra-ui/icons";
+import {AddIcon } from "@chakra-ui/icons";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 export  function Dashboard() {
@@ -51,7 +45,7 @@ export  function Dashboard() {
                 <Menu>
                   <MenuButton bg={"none"} fontWeight={"semibold"}>
                     <Heading as={"h2"} fontWeight={"normal"}>
-                      My Calendly
+                      My Scheduler
                     </Heading>
                   </MenuButton>
                   <MenuList>
@@ -85,11 +79,7 @@ export  function Dashboard() {
                   Scheduled Events
                 </Button>
               </Link>
-              <Link to={"/userevent/userhome/workflows"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
-                  Workflows
-                </Button>
-              </Link>
+    
               <Link to={"/userevent/userhome/routingforms"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
                   Routing Forms

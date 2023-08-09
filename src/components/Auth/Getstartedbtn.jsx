@@ -1,5 +1,4 @@
 import React from 'react'
-import { SiLinkedin } from 'react-icons/si';
 import { Button, Center, Text } from '@chakra-ui/react';
 
 export default function Getstartedbtn() {

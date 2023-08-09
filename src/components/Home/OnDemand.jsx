@@ -15,7 +15,7 @@ export const OnDemand = () => {
       py={{ base: "55px", md: "70px" }}
     >
       <VStack w={"50%"}>
-        <Image src="https://i.ibb.co/L53dnZh/Screenshot-11.png" alt="globe" />
+        <Image src="https://www.celayix.com/wp-content/uploads/2023/01/Demand-driven-scheduling.png" alt="globe" />
       </VStack>
       <VStack w={"50%"} align={"flex-start"} spacing={6} pl={"10%"}>
         <Heading>
@@ -38,8 +38,8 @@ export const OnDemand = () => {
           textAlign={{ base: "left"}}
          lineHeight={'9'}
         >
-          Prospects can schedule meetings in just a few clicks – whenever the
-          moment is right. And cancellations go down because rescheduling is
+          People can schedule meetings in just a few clicks – whenever the
+          moment is right and cancellations can go down because rescheduling is
           easy, fast, and on their terms.
         </Text>
       </VStack>

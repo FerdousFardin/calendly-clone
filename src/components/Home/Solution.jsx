@@ -31,7 +31,7 @@ export const Solution = () => {
         <Box>
            <Heading>
             <Text textAlign={'center'} color={'blue.900'} fontSize={'4.8xl'}>
-            The right Calendly for the work you do
+            The right Scheduler for the work you do
             </Text>
             </Heading> 
         </Box>

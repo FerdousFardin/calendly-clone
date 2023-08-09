@@ -46,20 +46,20 @@ export default function EventCard() {
               <MdEdit />
               </Box>
               Edit</MenuItem>
-              <MenuItem>
+              {/* <MenuItem>
               <Box mr={2}>
               <BiNote/>
               </Box>
               Add Internal Note</MenuItem>
               <MenuItem><Box mr={2}>
               <BiCopy/>
-              </Box>Clone</MenuItem>
+              </Box>Clone</MenuItem> */}
               <MenuItem><Box mr={2}>
               <RiDeleteBin6Fill/>
               </Box>Delete</MenuItem>
               <hr />
           
-              <MenuItem>On/Off <Switch ml={'6rem'}/></MenuItem>
+              {/* <MenuItem>On/Off <Switch ml={'6rem'}/></MenuItem> */}
             </MenuList>
           </Menu>
         </Flex>

@@ -33,7 +33,7 @@ const events =  [
     endDate :  new Date (2022 , 6, 10),
 },
 {
-    title : "Conferace",
+    title : "Conferance",
     startDate :  new Date (2022 , 6, 18),
     endDate :  new Date (2022 , 6, 20),
 },
@@ -60,13 +60,9 @@ const Calendar2 = () => {
     }
    
 useEffect(() => {
-    // handleAddEvent();
     handleInputReset();
 },[allEvents])
 
-
-// console.log("newEvent",newEvent)
-// console.log("allEvents",allEvents)
   return (
     <div className='App'>
         <div className='container'>
@@ -77,7 +73,6 @@ useEffect(() => {
                     <DatePicker  placeholderText='Start Date' selected={newEvent.startDate} onChange={(startDate) => setNewEvent( {...newEvent, startDate }) } />
                     <DatePicker  placeholderText='End Date' selected={newEvent.endDate} onChange={(endDate) => setNewEvent( {...newEvent, endDate }) } />
                     <input type={"time"}  placeholderText='Start time' value={newEvent.startTime}  onChange={(e) => setNewEvent( {...newEvent, startTime : e.target.value }) } />
-                    {/* <input type={"time"}  placeholderText='End time' value={newEvent.startTime}  onChange={(e) => setNewEvent( {...newEvent, startTime : e.target.startTime }) } /> */}
                     <button className='button' onClick={handleAddEvent}>Add Event</button> 
                 </div>
             </div>

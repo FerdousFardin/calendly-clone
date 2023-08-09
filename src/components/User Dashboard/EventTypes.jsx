@@ -51,19 +51,13 @@ const EventTypes = () => {
                 </Box>
                 Copy Link
               </MenuItem>
-              <MenuItem>
-                <Box mr={2}>
-                  <BiCodeAlt />
-                </Box>
-                Add to Website
-              </MenuItem>
+              
             </MenuList>
           </Menu>
         </Flex>
       </Flex>
       <hr />
       <Flex justifyContent={"left"} gap={8}>
-        <EventCard />
         <EventCard />
       </Flex>
     </Box>
