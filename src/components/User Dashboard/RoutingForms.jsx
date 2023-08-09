@@ -7,7 +7,7 @@ const RoutingForms = () => {
 <Flex>
 <Box p={8}>
   <Heading>Connect the right people, faster</Heading>
-  <Text pr={20} my={4}>Routing forms let you gather information from someone up front and direct them to a specific booking page or website based on their responses.</Text>
+  <Text pr={20} my={4}>Routing forms let you gather information from someone up front and direct them to a specific scheduling page</Text>
 
   <Button my={4} color={"blue.500"} rounded={"full"} borderColor={'blue.500'} variant={"outline"}>+ New Routing Room</Button>
 </Box>

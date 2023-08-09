@@ -1,15 +1,10 @@
 import {
   Box,
   Button,
-  Center,
-  Checkbox,
   Flex,
   Heading,
-  Switch,
-  Text,
   FormControl,
   FormLabel,
-  FormErrorMessage,
   FormHelperText,
   Input,
   Textarea,
@@ -31,10 +26,7 @@ const EventForm = () => {
           {"< Back"}
         </Button>
         <Heading fontWeight={"normal"}>Add Event Type</Heading>
-        {/* <Flex gap={2}>
-          <Text>Your Event Type is</Text>
-          <Switch id="email-alerts" />
-        </Flex> */}
+    
       </Flex>
       <hr />
       <FormControl border={"1px solid"} p={8}>

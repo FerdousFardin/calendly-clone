@@ -14,7 +14,7 @@ import {Link} from 'react-router-dom'
 import { Input, InputGroup, InputLeftElement } from "@chakra-ui/react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RiSettings2Fill } from "react-icons/ri";
-import { BiLink, BiCodeAlt } from "react-icons/bi";
+import { BiLink} from "react-icons/bi";
 import EventCard from "./EventCard";
 const EventTypes = () => {
   return (

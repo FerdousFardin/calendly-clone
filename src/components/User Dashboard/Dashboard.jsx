@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import {
   Box,
   Flex,
@@ -54,7 +53,6 @@ export  function Dashboard() {
                       Help Center
                     </MenuItem>
                     <MenuItem>
-                      {/* <Box mr={4}><MdOutlineLiveHelp/></Box> */}
                       Chat With Us
                     </MenuItem>
                   </MenuList>
@@ -65,9 +63,7 @@ export  function Dashboard() {
             <HStack
               as={"nav"}
               spacing={4}
-              justifyContent={"space-between"}
-              // display={{ base: "none", md: "flex" }}
-              
+              justifyContent={"space-between"}            
             >
               <Link to={"/userevent/userhome/eventtype"}>
                 <Button bg={"none"} fontWeight={"semibold"}>

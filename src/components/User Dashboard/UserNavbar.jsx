@@ -67,7 +67,6 @@ const navigate = useNavigate();
               as={"nav"}
               marginLeft={"10rem"}
               spacing={4}
-              // display={{ base: "none", md: "flex" }}
             >
               <Link to={"/userevent/userhome"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
@@ -173,16 +172,6 @@ const navigate = useNavigate();
             </Menu>
           </Flex>
         </Flex>
-
-        {/* {isOpen ? (
-          <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              {Links.map((link) => (
-                <NavLink key={link}>{link}</NavLink>
-              ))}
-            </Stack>
-          </Box>
-        ) : null} */}
       </Box>
       <hr />
     </>
