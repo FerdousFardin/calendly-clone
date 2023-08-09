@@ -1,4 +1,3 @@
-
 import {
     Box,
     Center,
@@ -7,7 +6,6 @@ import {
     Stack,
     useColorModeValue,
   } from '@chakra-ui/react';
-  import { CheckCircleIcon } from '@chakra-ui/icons'
   import { ChevronRightIcon } from '@chakra-ui/icons'
   export default function SolutionCard({logo,heading,text}) {
     return (

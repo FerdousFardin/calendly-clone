@@ -29,26 +29,26 @@ export const brandData = [
 export const SolutionCardsData = [
 {
     // logo:"file:///C:/Users/mahta/Downloads/undraw_business_chat_re_gg4h.svg",
-    heading:"Sales",
-    text:"Spend more time selling, and less time on admin. Shorten your sales cycle by letting prospects schedule while they’re in peak buying mode."
+    heading:"Productivity",
+    text:"Spend more time on productivity. Shorten your hardwork by letting prospects schedule while they’re in peak mode."
 
 },
 {
     // logo:"https://i.ibb.co/MspCx5h/Screenshot-5.png",
     heading:"Marketing",
-    text:"Spend more time selling, and less time on admin. Shorten your sales cycle by letting prospects schedule while they’re in peak buying mode."
+    text:"Spend more time on productivity. Shorten your hardwork by letting prospects schedule while they’re in peak mode."
     
 },
 {
     // logo:"https://i.ibb.co/k1XHLr5/Screenshot-6.png",
-    heading:"Customer Success",
-    text:"Offer exceptional support: Your clients will be delighted with one-click scheduling and increased responsiveness. "
+    heading:"Customer Support",
+    text:"Offer exceptional support: our clients will be delighted with one-click scheduling and increased responsiveness. "
     
 },
 {
     // logo:"https://i.ibb.co/bQXCzkK/Screenshot-7.png",
     heading:"Revenue Operations",
-    text:"Streamline meeting and activity data. Calendly’s native integrations with Salesforce and HubSpot ensure up-to-date reporting. "
+    text:"Streamline meeting and activity data. Scheduler's native integrations with Salesforce and HubSpot ensure up-to-date reporting. "
     
 },
 {

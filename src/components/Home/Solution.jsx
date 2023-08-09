@@ -1,18 +1,9 @@
 import React from 'react'
 import {
-    Container,
-    Stack,
-    VStack,
     Flex,
     Box,
     Heading,
     Text,
-    Button,
-    Image,
-    Icon,
-    IconButton,
-    createIcon,
-    useColorModeValue,
     GridItem,
     Grid,
   } from '@chakra-ui/react';

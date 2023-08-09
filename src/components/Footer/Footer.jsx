@@ -3,9 +3,7 @@ import {
     chakra,
     Container,
     Heading,
-    Image,
     Link,
-    Select,
     SimpleGrid,
     Stack,
     Text,
@@ -13,7 +11,6 @@ import {
     VisuallyHidden,
   } from '@chakra-ui/react';
   import { FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from 'react-icons/fa';
-  import {FiYoutube} from "react-icons/fi";
   
   
   const ListHeader = ({ children }) => {
@@ -100,20 +97,17 @@ import {
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"} fontFamily={"revert-layer"}>About</Heading></ListHeader>
               <Link href={'#'}>About Scheduler</Link>
-              <Link href={'#'}>Contact Sales</Link>
-              <Link href={'#'}>Security</Link>
+              <Link href={'#'}>Contact us</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Solutions</Heading></ListHeader>
               <Link href={'#'}>Customer Support</Link>
               <Link href={'#'}>Sales</Link>
-              <Link href={'#'}>Marketing</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Popular Features</Heading></ListHeader>
               <Link href={'#'}>Embeded Scheduler</Link>
               <Link href={'#'}>Sending Notifications</Link>
-              <Link href={'#'}>Using Scheduler Mobile</Link>
             </Stack>
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Support</Heading></ListHeader>
@@ -124,10 +118,6 @@ import {
               <ListHeader><Heading size={"md"}>Add-Ons</Heading></ListHeader>
               <Link href={'#'}>Download for Chrome</Link>
               <Link href={'#'}>Download for FireFox</Link>
-            </Stack>
-            <Stack align={'flex-start'} gap={3}>
-              <ListHeader><Heading size={"md"}>Developers</Heading></ListHeader>
-              <Link href={'#'}>Developer Tools</Link>
             </Stack>
             </SimpleGrid>
           </SimpleGrid>

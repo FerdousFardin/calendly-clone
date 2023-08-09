@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, {useState } from "react";
 import { Flex, Spacer, useDisclosure } from "@chakra-ui/react";
 import {HStack, VStack, Button, Box, Image } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
@@ -33,7 +33,6 @@ import {
   DrawerCloseButton,
 } from "@chakra-ui/react";
 import SignupBox from "../Auth/SignupBox";
-import Product from "../Product/Product";
 import Resources from "../Resources/Resources";
 export const Navbar = ({handleLog}) => {
   const navigate = useNavigate();
@@ -79,16 +78,14 @@ export const Navbar = ({handleLog}) => {
             <VStack fontWeight={"bold"} align={'left'} >
               <Link to='/individuals'> <Text cursor={'pointer'} pl={'18px'}>Individuals</Text></Link>
               <Divider />
-              {/* <Link to='/teams'> <Text cursor={'pointer'} pl={'18px'}>Teams</Text></Link> */}
-              <Divider />
-              <Link to='/enterprise'> <Text cursor={'pointer'} pl={'18px'}>Enterprise</Text></Link>
+
               <Divider />
               <Link to='/pricing'> <Text cursor={'pointer'} pl={'18px'}>Pricing</Text></Link>
               <Accordion allowToggle width={"100%"} bg={'white'}  outline={'none'}>
                 <AccordionItem>
                     <AccordionButton>
                     <Box flex='1' textAlign='left' fontWeight={'bold'} pl={'auto'}>
-                        <Text>Resources</Text>
+                        <Text>More</Text>
                          </Box>
                       <AccordionIcon />
                     </AccordionButton>
@@ -153,21 +150,13 @@ export const Navbar = ({handleLog}) => {
             Individuals
           </Text>
           </Link>
-          {/* <Link to='/teams'>
-          <Text fontSize="1rem" fontWeight="700" _hover={{ color: "#006BFF" }}>
-            Teams
-          </Text>
-          </Link> */}
+
           <Link to='/enterprise'>
           <Text fontSize="1rem" fontWeight="700" _hover={{ color: "#006BFF" }}>
             Pricing
           </Text>
           </Link>
-          {/* <Link to='/product'>
-          <Text fontSize={"1rem"} >
-            <Product/>
-          </Text>
-          </Link> */}
+
           <Link to='/resources'>
           <Text >
             <Resources/>

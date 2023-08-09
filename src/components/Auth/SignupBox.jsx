@@ -26,7 +26,7 @@ import {
           my={1}>
           <FormControl id="email">
             <Input
-              placeholder="your-email@example.com"
+              placeholder="abc@gmail.com"
               _placeholder={{ color: 'gray.500' }}
               type="email"
             />

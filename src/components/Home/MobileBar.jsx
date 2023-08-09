@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import AOS from "aos";
-import { Box, Flex, Heading, VStack, Image, Text } from "@chakra-ui/react";
+import {Flex, Heading, VStack, Image, Text } from "@chakra-ui/react";
 import "aos/dist/aos.css";
 export const MobileBar = () => {
   useEffect(() => {

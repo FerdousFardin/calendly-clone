@@ -1,4 +1,3 @@
-
 import {
   Box,
   Center,
@@ -32,7 +31,7 @@ export default function HomeCards() {
             color={useColorModeValue('gray.700', 'white')}
             fontSize={'2xl'}
             fontFamily={'body'}>
-            Create simple rules
+            Create simple tasks
           </Heading>
           <Text color={'gray.500'} fontSize={'xl'} textAlign={"left"} pr={"10px"}>
           Let Scheduler know your availability preferences and it'll do the work for you.

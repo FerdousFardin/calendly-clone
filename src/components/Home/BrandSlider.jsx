@@ -8,7 +8,7 @@ export const BrandSlider = () => {
         <Text>Simplified scheduling for </Text>
         <Text align={"center"}>
           <Text as={"span"} color={"#006BFF"}>
-            worldwide
+            Worldwide
           </Text>{" "}
           users 
         </Text>

@@ -1,17 +1,8 @@
 import React from "react";
 import {
-  Container,
-  Stack,
-  Flex,
   Box,
   Heading,
   Text,
-  Button,
-  Image,
-  Icon,
-  IconButton,
-  createIcon,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import HomeCards from "./HomeCards";

@@ -1,9 +1,6 @@
 import { Button,Box,Heading,Image} from "@chakra-ui/react";
 import React from "react";
 import styles from "../styles/indivduals.module.css";
-import img1 from "../images/img4.png";
-import img5 from "../images/img5.png";
-import Card from "./Card";
 
 
 const Indiviuals = () => {
@@ -47,7 +44,7 @@ const Indiviuals = () => {
           />
         </Box>
       </Box>
-      {/* ///////// */}
+ 
 
       <Box className={styles.div1}>
         <Box className={styles.div3}>
@@ -65,9 +62,9 @@ const Indiviuals = () => {
           <Box className={styles.p1}>
             <p>
               When invitees select a meeting slot from your schedule,
-              they only see the times you’re available, and only the{" "}
-              length and type of meeting you want to have. Your {" "}
-              schedule fills up efficiently, and everyone avoids excess {" "}
+              they only see the times you’re available, and only the
+              length and type of meeting you want to have. Your
+              schedule fills up efficiently, and everyone avoids excess
               email exchanges.
             </p>
           </Box>
@@ -86,7 +83,7 @@ const Indiviuals = () => {
           <Box className={styles.p1}>
             <p>
               Happy clients are long-term clients. With Scheduler,
-              prospects can schedule with you instantly so no one slips{" "}
+              prospects can schedule with you instantly so no one slips
               through the cracks, and everything about your interaction
               is personal, professional, and respectful of their time.
             </p>
@@ -104,22 +101,6 @@ const Indiviuals = () => {
             className={styles.Image1}
           />
         </Box>
-      </Box>
-
-      <Box className={styles.div7}>
-        <Heading className={styles.div7h1}>Try Scheduler free</Heading>
-        <p className={styles.Smart}>
-          After your 14-day trial of our Teams plan, enjoy the Free version of
-          Scheduler forever.
-        </p>
-        <br />
-        <button className={styles.btn1}>Start for free</button>
-        <p className={styles.Smart}>
-          To inquire about our Enterprise plans, click{" "}
-          <a href="/" className={styles.em}>
-            here
-          </a>
-        </p>
       </Box>
     </Box>
   );

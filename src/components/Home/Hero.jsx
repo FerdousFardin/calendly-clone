@@ -139,15 +139,6 @@ export default function Hero() {
                 </Button>
               </Box>
             </Stack>
-            <Box color={"#476788"}>
-              <Text fontSize={"1.2em"} fontWeight={"bold"}>
-                Don't have an account?
-                <Text as={"span"} color={"blue.400"}>
-                  {" "}
-                  Sign Up
-                </Text>
-              </Text>
-            </Box>
           </Stack>
           <Flex
             flex={1}

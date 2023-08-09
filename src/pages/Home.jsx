@@ -8,7 +8,7 @@ import { OnDemand } from '../components/Home/OnDemand'
 import { Reminder } from '../components/Home/Reminder'
 import { RulesCard } from '../components/Home/RulesCard'
 import { Solution } from '../components/Home/Solution'
-import { TryCalendly } from '../components/Home/TryCalendly'
+
 export const Home = () => {
   return (
     <>
@@ -20,9 +20,7 @@ export const Home = () => {
     <DoMore/>
     <Reminder/>
     <OnDemand/>
-    <MobileBar/>
-    <TryCalendly/>
-    
+    <MobileBar/>  
     </>
   )
 }
