@@ -34,7 +34,10 @@ import {
 } from "@chakra-ui/react";
 import SignupBox from "../Auth/SignupBox";
 import Resources from "../Resources/Resources";
-import { useAuthState } from "react-firebase-hooks/auth";
+import {
+  useAuthState,
+  useSignInWithEmailAndPassword,
+} from "react-firebase-hooks/auth";
 
 export const Navbar = ({ handleLog }) => {
   const navigate = useNavigate();
@@ -43,6 +46,9 @@ export const Navbar = ({ handleLog }) => {
   const [opend, setOpend] = useState(false);
   const [goingUp, setGoingUp] = useState(false);
   const [user] = useAuthState(auth);
+  const [signInWithEmailAndPassword, loading, error] =
+    useSignInWithEmailAndPassword(auth);
+
   const postPHEvent = async () => {
     const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
       method: "POST",
@@ -171,7 +177,13 @@ export const Navbar = ({ handleLog }) => {
           <ModalHeader textAlign={"center"}>Get started today</ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
-            <SignupBox loginWithGoogle={loginWithGoogle} log={"Sign up"} />
+            <SignupBox
+              login={signInWithEmailAndPassword}
+              loginLoading={loading}
+              loginError={error}
+              loginWithGoogle={loginWithGoogle}
+              log={"Sign up"}
+            />
           </ModalBody>
         </ModalContent>
       </Modal>
