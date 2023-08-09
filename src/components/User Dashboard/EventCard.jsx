@@ -17,49 +17,75 @@ import {
   MenuItem,
   Switch,
 } from "@chakra-ui/react";
-import { BiCopy,BiNote } from "react-icons/bi";
-import { RiSettings2Fill,RiDeleteBin6Fill } from "react-icons/ri";
-import { MdOutlineKeyboardArrowDown,MdEdit } from "react-icons/md";
-export default function EventCard() {
+import { BiCopy, BiNote } from "react-icons/bi";
+import { RiSettings2Fill, RiDeleteBin6Fill } from "react-icons/ri";
+import { MdOutlineKeyboardArrowDown, MdEdit } from "react-icons/md";
+import { colors } from "../../data/data";
+export default function EventCard({ event, handleOpen }) {
   return (
-    <Center py={6} >
+    <Center py={6}>
       <Box
         maxW={"320px"}
         w={"300px"}
         bg={useColorModeValue("white", "gray.900")}
         boxShadow={"xl"}
         rounded={"xl"}
-        borderTop={"0.5rem solid #8046f3"}
+        borderTop={`0.5rem solid ${
+          colors[Math.floor(Math.random() * (colors.length - 1))]
+        }`}
         p={4}
         textAlign={"left"}
-        
       >
-        <Flex direction={"row"} justifyContent={'space-between'}>
+        <Flex direction={"row"} justifyContent={"space-between"}>
           <Checkbox></Checkbox>
           <Menu>
-            <MenuButton as={Button} border={'none'} bg={'none'}  rightIcon={<MdOutlineKeyboardArrowDown />}>
+            <MenuButton
+              as={Button}
+              border={"none"}
+              bg={"none"}
+              rightIcon={<MdOutlineKeyboardArrowDown />}
+            >
               <RiSettings2Fill />
             </MenuButton>
             <MenuList>
               <MenuItem>
-              <Box mr={2}>
-              <MdEdit />
-              </Box>
-              Edit</MenuItem>
-              <MenuItem><Box mr={2}>
-              <RiDeleteBin6Fill/>
-              </Box>Delete</MenuItem>
+                <Box mr={2}>
+                  <MdEdit />
+                </Box>
+                Edit
+              </MenuItem>
+              <MenuItem>
+                <Box mr={2}>
+                  <BiNote />
+                </Box>
+                Add Internal Note
+              </MenuItem>
+              <MenuItem>
+                <Box mr={2}>
+                  <BiCopy />
+                </Box>
+                Clone
+              </MenuItem>
+              <MenuItem onClick={() => handleOpen(event._id)}>
+                <Box mr={2}>
+                  <RiDeleteBin6Fill />
+                </Box>
+                Delete
+              </MenuItem>
               <hr />
-    
+
+              <MenuItem>
+                On/Off <Switch ml={"6rem"} />
+              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
         <Box mb={12}>
           <Heading fontSize={"xl"} fontWeight={600}>
-            30 Minute Meeting
+            {event && event.heading}
           </Heading>
           <Text fontWeight={400} color={"gray.500"} mb={4}>
-            30 mins, One-on-One
+            {event && event.time}, {event && event.type}
           </Text>
 
           <Link href={"#"} color={"blue.500"}>
@@ -76,7 +102,7 @@ export default function EventCard() {
             rounded={"full"}
             variant={"ghost"}
             leftIcon={<BiCopy />}
-            color={'blue.500'}
+            color={"blue.500"}
           >
             Copy Link
           </Button>

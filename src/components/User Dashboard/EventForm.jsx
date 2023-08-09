@@ -10,9 +10,44 @@ import {
   Textarea,
   Select,
 } from "@chakra-ui/react";
-import React from "react";
+import { times } from "../../data/data";
+import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/Firebase";
 
 const EventForm = () => {
+  const navigate = useNavigate();
+  const [user] = useAuthState(auth);
+  const [type, setType] = useState("One-on-One");
+  const [heading, setHeading] = useState("");
+  const [time, setTime] = useState(5);
+  const [loading, setLoading] = useState(false);
+
+  const postEvent = async () => {
+    setLoading(true);
+    const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        heading,
+        time: `${time} min`,
+        type,
+        email: user && user.email,
+      }),
+    });
+    const result = await data.json();
+    return result;
+  };
+
+  const handleSave = async () => {
+    const res = await postEvent();
+    if (res.acknowledged) navigate("/userevent/userhome/eventtype");
+    setLoading(false);
+  };
   return (
     <Box mx={"25rem"} p={4}>
       <Flex justifyContent={"space-between"} my={8}>
@@ -21,12 +56,11 @@ const EventForm = () => {
           borderColor={"blue.500"}
           rounded={50}
           color={"blue.500"}
+          onClick={() => navigate("/userevent/userhome/eventtype")}
         >
-          {" "}
-          {"< Back"}
+          {"< Back to Events"}
         </Button>
         <Heading fontWeight={"normal"}>Add Event Type</Heading>
-    
       </Flex>
       <hr />
       <FormControl border={"1px solid"} p={8}>
@@ -38,21 +72,37 @@ const EventForm = () => {
           </Box>
           <Flex gap={4}>
             <Button rounded={"full"}>Cancel</Button>
-            <Button rounded={"full"} color={"white"} bg={"blue.500"}>
-              Next
+            <Button
+              isLoading={loading}
+              loadingText="Saving"
+              onClick={handleSave}
+              rounded={"full"}
+              color={"white"}
+              bg={"blue.500"}
+            >
+              Save
             </Button>
           </Flex>
         </Flex>
         <hr />
         <FormLabel>Event Name</FormLabel>
-        <Input type="email" isRequired />
-        <FormHelperText>We'll never share your email.</FormHelperText>
-        <FormLabel>Select Platform</FormLabel>
-        <Input type="text" isRequired />
+        <Input
+          type="text"
+          onChange={(e) => setHeading(e.target.value)}
+          isRequired
+        />
+        <FormHelperText>We'll never share your info.</FormHelperText>
+        <FormLabel>Duration</FormLabel>
+        <Select onChange={(e) => setTime(e.target.value)}>
+          {times.map((time) => (
+            <option value={time}>{time} minutes</option>
+          ))}
+        </Select>
         <FormLabel>Event Type</FormLabel>
-        <Select placeholder="Select event Type">
-          <option value="option1">One-on-One</option>
-          <option value="option2">Group</option>
+        <Select onChange={(e) => setType(e.target.value)}>
+          <option value="One-on-One">One-on-One</option>
+          <option value="Group">Group</option>
+          <option value="Collective">Collective</option>
         </Select>
         <FormLabel>Description/Instructions</FormLabel>
         <Textarea type="textBox" isRequired minHeight={40} />
@@ -62,8 +112,15 @@ const EventForm = () => {
 
         <Flex gap={4} my={4} justifyContent={"right"}>
           <Button rounded={"full"}>Cancel</Button>
-          <Button color={"white"} rounded={"full"} bg={"blue.500"}>
-            Next
+          <Button
+            isLoading={loading}
+            loadingText="Saving"
+            onClick={handleSave}
+            color={"white"}
+            rounded={"full"}
+            bg={"blue.500"}
+          >
+            Save
           </Button>
         </Flex>
       </FormControl>

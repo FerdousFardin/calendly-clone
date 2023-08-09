@@ -27,17 +27,21 @@ import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown, MdOutlineLiveHelp } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { auth } from "../../firebase/Firebase.js";
+import {
+  useSignInWithEmailAndPassword,
+  useSignInWithGoogle,
+  useAuthState,
+} from "react-firebase-hooks/auth";
 
-export  function Navbar({handleLog}) {
+export function Navbar({ handleLog }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-const navigate = useNavigate();
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+  console.log("user", user, loading);
   return (
     <>
-      <Box
-        bg={useColorModeValue("white", "gray.900")}
-        px={4}
-        mx={"25rem"}
-      >
+      <Box bg={useColorModeValue("white", "gray.900")} px={4} mx={"25rem"}>
         <Flex
           h={16}
           justifyContent="space-between"
@@ -113,16 +117,19 @@ const navigate = useNavigate();
                 cursor={"pointer"}
                 minW={0}
               >
-                <Flex marginLeft={8}>
-                  <Avatar size={"sm"} src={""} />
-                  <Box marginLeft={2}>
-                    {" "}
+                <Flex
+                  justifyContent="center"
+                  alignItems="center"
+                  marginLeft={8}
+                >
+                  <Avatar size="sm" name={user?.displayName} src="" />
+                  <Box>
                     <Button
                       bg={"none"}
                       rightIcon={<MdOutlineKeyboardArrowDown />}
                     >
                       Account
-                    </Button>{" "}
+                    </Button>
                   </Box>
                 </Flex>
               </MenuButton>
@@ -159,10 +166,12 @@ const navigate = useNavigate();
                 </MenuItem>
 
                 <MenuDivider />
-                <MenuItem onClick={()=>{
-                  handleLog();
-                  navigate('/');
-                }}>
+                <MenuItem
+                  onClick={() => {
+                    handleLog();
+                    navigate("/");
+                  }}
+                >
                   <Box marginRight={3}>
                     <IoIosLogOut size={18} />
                   </Box>

@@ -1,6 +1,6 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import { Flex, Spacer, useDisclosure } from "@chakra-ui/react";
-import {HStack, VStack, Button, Box, Image } from "@chakra-ui/react";
+import { HStack, VStack, Button, Box, Image } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import "./Navbar.css";
 import { auth } from "../../firebase/Firebase";
@@ -34,16 +34,36 @@ import {
 } from "@chakra-ui/react";
 import SignupBox from "../Auth/SignupBox";
 import Resources from "../Resources/Resources";
-export const Navbar = ({handleLog}) => {
+import { useAuthState } from "react-firebase-hooks/auth";
+
+export const Navbar = ({ handleLog }) => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [opend, setOpend] = useState(false);
   const [goingUp, setGoingUp] = useState(false);
+  const [user] = useAuthState(auth);
+  const postPHEvent = async () => {
+    const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        heading: "Getting Started",
+        time: "5 min",
+        type: "Tutorial",
+        email: user && user.email,
+      }),
+    });
+    const result = await data.json();
+    return result;
+  };
+
   const handleScroll = () => {
     if (window.scrollY >= 104) {
       setGoingUp(true);
-      console.log(goingUp);
     } else {
       setGoingUp(false);
     }
@@ -52,9 +72,11 @@ export const Navbar = ({handleLog}) => {
     console.log("login");
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then((res) => {
-       handleLog();
-       navigate('/userevent/userhome');
+      .then(async (res) => {
+        handleLog();
+        const resPH = await postPHEvent();
+        console.log(resPH.acknowledged);
+        navigate("/userevent/userhome/eventtype");
       })
       .catch((err) => {
         console.log(err);
@@ -75,26 +97,68 @@ export const Navbar = ({handleLog}) => {
           <DrawerHeader>Welcome to Scheduler</DrawerHeader>
 
           <DrawerBody>
-            <VStack fontWeight={"bold"} align={'left'} >
-              <Link to='/individuals'> <Text cursor={'pointer'} pl={'18px'}>Individuals</Text></Link>
+            {/* <Input placeholder='Type here...' /> */}
+            <VStack fontWeight={"bold"} align={"left"}>
+              <Link to="/individuals">
+                {" "}
+                <Text cursor={"pointer"} pl={"18px"}>
+                  Individuals
+                </Text>
+              </Link>
               <Divider />
-
+              <Link to="/teams">
+                {" "}
+                <Text cursor={"pointer"} pl={"18px"}>
+                  Teams
+                </Text>
+              </Link>
               <Divider />
-              <Link to='/pricing'> <Text cursor={'pointer'} pl={'18px'}>Pricing</Text></Link>
-              <Accordion allowToggle width={"100%"} bg={'white'}  outline={'none'}>
+              <Link to="/enterprise">
+                {" "}
+                <Text cursor={"pointer"} pl={"18px"}>
+                  Enterprise
+                </Text>
+              </Link>
+              <Divider />
+              <Link to="/pricing">
+                {" "}
+                <Text cursor={"pointer"} pl={"18px"}>
+                  Pricing
+                </Text>
+              </Link>
+              <Accordion
+                allowToggle
+                width={"100%"}
+                bg={"white"}
+                outline={"none"}
+              >
                 <AccordionItem>
-                    <AccordionButton>
-                    <Box flex='1' textAlign='left' fontWeight={'bold'} pl={'auto'}>
-                        <Text>More</Text>
-                         </Box>
-                      <AccordionIcon />
-                    </AccordionButton>
-                  <AccordionPanel pb={4} align={'center'}>
-              <Link to='/about'> <Text cursor={'pointer'} pl={'18px'}>About</Text></Link>
+                  <AccordionButton>
+                    <Box
+                      flex="1"
+                      textAlign="left"
+                      fontWeight={"bold"}
+                      pl={"auto"}
+                    >
+                      <Text>Resources</Text>
+                    </Box>
+                    <AccordionIcon />
+                  </AccordionButton>
+                  <AccordionPanel pb={4} align={"center"}>
+                    <Link to="/about">
+                      {" "}
+                      <Text cursor={"pointer"} pl={"18px"}>
+                        About
+                      </Text>
+                    </Link>
                     <br />
-              <Link to='/customer'> <Text cursor={'pointer'} pl={'18px'}>Customer</Text></Link>
+                    <Link to="/customer">
+                      {" "}
+                      <Text cursor={"pointer"} pl={"18px"}>
+                        Customer
+                      </Text>
+                    </Link>
                   </AccordionPanel>
-                  
                 </AccordionItem>
               </Accordion>
             </VStack>
@@ -128,16 +192,24 @@ export const Navbar = ({handleLog}) => {
           cursor="pointer"
           display={{ base: "none", sm: "block", md: "block" }}
         >
-          <Link to='/'>
-          <Image
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAT4AAACfCAMAAABX0UX9AAABC1BMVEX///9kZGRdXV1YWFhhYWFVVVX5+flbW1t9fX3n5+fh4eGsrKympqaEhITz8/OysrL/xjTY2NiKior/yjk3eK7t7e2QkJC4uLhsbGz/zDvQ0NA2a5eYmJjb29vDw8Pl7PP/0kL/3Ul0dHSfn5/AwMArcKf/6pj/5YWVlZVJSUn/5qv/xhr/xisXa6fN2+g3dahbirT/+en/0Cr/3XIWW43/8c69y9n/6LX/1G3/zE6wwtP/89v/3ZYAYKKQr82BpMYgca4cZ52jvthplLxqmMJQf6hLhbhji7G0yd3a4+v/3Tf/3Gb/2FP/9+L/34iAnbg9b5lvkK+AmaX/3o3/zEb/1Xb/78L/zVj/vwBLXtGoAAAKzklEQVR4nO2bCVvaSBiAQyYHIIabQDgXSGvlUopHrRXBtdXdrm1Xq/3/v2RnMjPJBBLleKxL+73PPl3CTJLJyxzfTEZJAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAID/JcaHHuND/aXLsoFovZzDINcDfcujfTi37VzO7tlQ+1ah378+s+3xdb+vvXRRNpQr256+dBk2lnqd1L46NN1FMM7Eg6vxnt3r2YOBPZnYl+ND48XKtRnUcz3eTrWrvR4ZNXIDDnZ4OQWD4fTPc7kPffKpPu4RdTnbJpWPVj/y/8lkDM04hCm2Z5PWazjysLmLab+uTe3BnlTvTy/sidOOv4HAIMbYXu78EA+150SePe7T76e2vUc/9ceTCamBMBAH8CeWh//rXxCN9tSN85zax9BOcAsuTy6hAs7z8ePhuaOQ6LsKzmNMyoRJ/+cWbROoG9IhGTDsi4vcoBc8xn7C7j5hhaOTn1y4jeAK68OxS71n9wKr3/VoMjmRppPyCKrfPFc9bI+IOdvzerdXf/312j2of/qK/+2PDn9+4f739LE9+3r221d//PFaODTcfw5+UrE2hPp5kL1ZfS5/D/efvUibxEfWcmcI0ddoND4/e5E2iLNzb8YrEqJvd9hovHruMm0O9V7O/jMoIazxvm00hv88b5k2iAs7Z4+DlpTD9N3j5vv3WrfUGM9+hfVv9BRk1B3YQZONYH37b3HjbQzXGX3jqkxQkytfIc2usPV4thjNhhIr3+hJLsgqwcC+mE8J1vea2Fuv+sVRhCCvrq/KrvCkPprt+fSRnu/qrBc0VQtpvMPh59NSY/h+9Xv+PH3oufWd2YMBnpMFzdRC9B2dkuCldLP6PX8hfbjfC1vFCxs6MLu4+q1+z19H33VvELqNwKdP+3IpJO0P1xk8fh19uO1+DEsT9U1HZd9qwedS6Xblm/46+vYG9llYmqfvsDwql0dfhbTTUulOzGvUtiqFTKbQSqZnrhKrJXZIgukliPqsRCGzk8z7z6maLXyxylZt5nvDrGQKCWtGXzxNoXnYQdy597w+zdqq0HIKwSA7R5M0s5BJVMOEzINDltAlKK7v+hLLK4++iMHnwbDU8Y7iUVWXFQIOsnSxUtWKLAUnoAob3j19VgSRVFltCeckFSTTc3S1aQkJFVUn36JIOi7q21YR4Q0tHz1Qo+TznL78DkJucXb4j2O8oRcw8opOCpNZ1F79ka4P62tgffVvjryZ12z7w1LXDV1MVYkIoKibLYrEFFm1fPrMpHsiKvBT4hFdOEXxnkUryvxLVFAEfRl6oFJ9NJOyHaTPX1BFNZk+Gh4io+gkI/Ene5Q+rn2hiU7tO3PkXc4tZ2F99+yjRe+u6Dp7Pr3CH9inlTxiTdAXcX2QFFbmKn9CfqrcZLdpChdjH5fUl1D9p0fYrIXpUyrOuUpxUXvS1SMjh/TvpPcveT00Kge073el7i77SCXJBctKsoKpVf8DK7Jb4LygT4Q+r2SwJFltRphIecdJMfX5k5bT12b2kNzU2cXUtKCPFV43F9Y3tQeXJyfBvd8n+m6tPJqPCw+O7h9K3VN6kFe98mq4S1HVYtTp/kyuQmlt7ei0bErGp0/WdVesJKjQSV8YY/rVuKeFiFXdHmEpfRq7q07qeQ0xYaI+0oKQjhZfYJg62wc+BSXVR1Tel4Crfe90s6Uui1yoDIV2ePFq3s3PHlim3Rp2QQaDNzFBH0pYNd7AEamXbJKq0FMM3TtKs3NQy5DSxVUa7xZNYT1bW/eOXH1K06qaTwRDs/oClwvIuzXHXmDNvMmWSq6+PHvk4pYVF2fO7IEV1nfl36jFTKJtGZ4++iTMMooLjxij5+ywuuilKE5L1vgvs4w+6tzt2dhPUxH0LdHrefr2LseBaVRf4FvfG2wvy/VJrM/AVQupKJrg45ZJH0SvsWPvSnGf2Ao9HZH+MsqqFctYk12zbKx1JLsyl9HHxwceIgm34vrcoi7KCe77wtIOR4+9FD/O8r5PqrldhyORB34t9uz5uXO5PjpA8xpH9M2O1N5jsaelPSSv2cvoqwaMV+yCXB9adhfe4YSst4RQP5mGb2nBte+If2754z4W+FV8TyXiC3p9+tRIELLpjuIo4AqL6bOC9ZFf1+37lnKHuZ4MJqutZHeyXW/NoEYmD2J1IS2k4qsvIv45b5A+xQdKzta+cH2a/pQ+/7VVT58SnS/q42hY30q7Lv7pZDvi2964WYggz6FqeI13vkWE6+P+oz6abbfvY/osPUxfHoXo4423OXNtQd/CkzWXwWC1TXtH3Wx39jsjbRaYQNJb8aGDDyU725VkLR3THtO3zUah+RsmhFzuT+PTR0eVdljtmx06xIL7wqVlGNuDwKjvKb53u8fisRajsQabp5HequoPXOKq4ozNhcf0mT5JIqzt0QaW5wG5o68gROQGb6HzgUvTP6oLcH07S2s4XLHz66TcOVulEC3qqspqTEtxqxyPbTPkBnF2ROZz4fr8vZDWjGZaybZFUvicQd6uxmr+WUeLR4HNRIV3HwH62KyPzcnSxe1CwsStYS19Bta3wqapg67X9UVlhZSZTi7SrB8iHR6bGOGZUKbQVIXHCtcnVVirjFYlzSqyVSvnsXa4GITc2S/V1+bH3tQ6cM7LpzeJvJRPImfVSn8jzDpW0Ee2PZLWu8SmW6LtuJt6x4/T3Iy8nWmy8tIOJuOuMCnuwpSwZBCkT+MxOJ4682kynQvkfdGluGDlTwnXx1aGIjKO7vlUx0lZQ9/hpDypX38NDZ7nOb57v4/brhv1SRUhJKDl45Of6MwqiUJXOB7RJ8V0ZeacCBu6k17gJm/T/o5FjgVZSGnLYfokczasZKuMa+iT8MzsK1a48J7b+06qc5dKCWvNM2Gzom5rXoqwpKegIp1yPaZPyjfFJVb/xViC3pR8+tyFVAVlWBfH9M28Jq8hoTgRd5vDOvqmzrrU6Nui+Y87KYw7Y6M+CoqKdBn3JTrSt8W3HbEKT0GIhG80u2+TxhY7ckfbWhPxU+SMuPJrkZV/HREbGSRu0tAqOCvuJCNtUsWcfRl0sX52k4aRiPDiqJGWt1hPsy0fuOBbE3tflxg+7rMpf+VziFk1M2m2rfjcOJ53UmppIXz2b9yZ38ZjVGtt06xZsdlrxWtmOy2c455kWDh/fO5yAVuE8umaifOmxan4OjuJTnD1W2q7/FHXi1oA6RK33WVG3m4qdfd0tt8GZ1158Yr7LpX6scb+oF+Pk1HA+4wwcMjXOX062+/Et8VHju+44zt+Otvvh7Pj7Og+LPnAScF1r/suLMvvzNvh532y9/Ft4B9t7H/vdPG/77A9GDYCeDVsNIb3N42QbaPv8TTt9qALdS8MsmeZbFsO2Xd2i83hiKUD/V4Iu86eb+EPrg52d73XGSTawxELjLmhvP/s/MnBDW+9N50O38D8/obY66bgjwEfY3dYapRKw8btPamDN/RN+P7B6V0H2+tCuPckt8MSodspPdw8ZLMPtw/ZTtdpt51b+DvKBSgxsg7YHFlgwXUP5C3E0dAvkNmDJZYFuQuwl0q9dKk2hoPOvL0foXM5YJbj7Fzde3jpMm0Q+51Ze7C+twy3HZcfDt9fukQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8NvwHxHWG4GUJfs2AAAAAElFTkSuQmCC"
-            h="60px"
-            w="auto"
-            alt=""
-          />
+          <Link to="/">
+            <Image
+              src="https://i.postimg.cc/CxDV6G3h/scheduler-removebg-preview.png"
+              w="auto"
+              alt="Dan Abramov"
+            />
           </Link>
         </Box>
-        
+        <Box display={{ base: "block", sm: "none" }}>
+          <Link to="/">
+            <Image
+              src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI3LjQxNjYgMjUuOTI5OEMyNi4xMjE2IDI3LjA1NTQgMjQuNTEwNSAyOC40NTY2IDIxLjU3NjQgMjguNDU2NkgxOS44MjQ3QzE3LjcwNDMgMjguNDU2NiAxNS43NzU5IDI3LjcwMiAxNC4zOTU1IDI2LjMzMDdDMTMuMDQ3OCAyNC45OTE0IDEyLjMwNDMgMjMuMTU5NSAxMi4zMDQzIDIxLjE3MDJWMTguODE3OUMxMi4zMDQzIDE2LjgyODYgMTMuMDQ2NiAxNC45OTU1IDE0LjM5NTUgMTMuNjU3NEMxNS43NzU5IDEyLjI4NiAxNy43MDQzIDExLjUzMTQgMTkuODI0NyAxMS41MzE0SDIxLjU3NjRDMjQuNTEwNSAxMS41MzE0IDI2LjEyMTYgMTIuOTMyNiAyNy40MTY2IDE0LjA1ODJDMjguNzU5NiAxNS4yMjYzIDI5LjkxOTkgMTYuMjM0OCAzMy4wMDk4IDE2LjIzNDhDMzMuNDg5OCAxNi4yMzQ4IDMzLjk2MDUgMTYuMTk2OSAzNC40MTgzIDE2LjEyNDVDMzQuNDE0OCAxNi4xMTUzIDM0LjQxMTMgMTYuMTA3MyAzNC40MDc4IDE2LjA5ODFDMzQuMjI0IDE1LjY1MTMgMzQuMDA3MyAxNS4yMTI1IDMzLjc1OCAxNC43ODg3TDMxLjY5MTQgMTEuMjc3NkMyOS43OTU4IDguMDU1ODUgMjYuMjkxNCA2LjA3MjI3IDIyLjUwMDIgNi4wNzIyN0gxOC4zNjdDMTQuNTc1OCA2LjA3MjI3IDExLjA3MTQgOC4wNTY5OSA5LjE3NTc3IDExLjI3NzZMNy4xMDkyMiAxNC43ODg3QzUuMjEzNTkgMTguMDEwNSA1LjIxMzU5IDIxLjk3ODcgNy4xMDkyMiAyNS4xOTkzTDkuMTc1NzcgMjguNzEwNUMxMS4wNzE0IDMxLjkzMjIgMTQuNTc1OCAzMy45MTU4IDE4LjM2NyAzMy45MTU4SDIyLjUwMDJDMjYuMjkxNCAzMy45MTU4IDI5Ljc5NTggMzEuOTMxMSAzMS42OTE0IDI4LjcxMDVMMzMuNzU4IDI1LjE5OTNDMzQuMDA3MyAyNC43NzQ0IDM0LjIyNCAyNC4zMzY3IDM0LjQwNzggMjMuODlDMzQuNDExMyAyMy44ODA4IDM0LjQxNDggMjMuODcyNyAzNC40MTgzIDIzLjg2MzVDMzMuOTYwNSAyMy43OTEyIDMzLjQ5MSAyMy43NTMzIDMzLjAwOTggMjMuNzUzM0MyOS45MTk5IDIzLjc1MzMgMjguNzU5NiAyNC43NjE3IDI3LjQxNjYgMjUuOTI5OFoiIGZpbGw9IiMwMDZCRkYiLz4KPHBhdGggZD0iTTIxLjU3NjcgMTMuNjYyMUgxOS44MjVDMTYuNTk4MiAxMy42NjIxIDE0LjQ3NjYgMTUuOTIzNiAxNC40NzY2IDE4LjgxOFYyMS4xNzAzQzE0LjQ3NjYgMjQuMDY0NyAxNi41OTcgMjYuMzI2MiAxOS44MjUgMjYuMzI2MkgyMS41NzY3QzI2LjI3ODggMjYuMzI2MiAyNS45MSAyMS42MjI4IDMzLjAxMDEgMjEuNjIyOEMzMy42OTA0IDIxLjYyMjggMzQuMzYyNCAyMS42ODM3IDM1LjAxNjkgMjEuODAzMUMzNS4yMzI0IDIwLjYwNzUgMzUuMjMyNCAxOS4zODMxIDM1LjAxNjkgMTguMTg2M0MzNC4zNjI0IDE4LjMwNTggMzMuNjkwNCAxOC4zNjY2IDMzLjAxMDEgMTguMzY2NkMyNS45MSAxOC4zNjU1IDI2LjI3ODggMTMuNjYyMSAyMS41NzY3IDEzLjY2MjFaIiBmaWxsPSIjMDA2QkZGIi8+CjxwYXRoIGQ9Ik0zOS4wOTUgMjMuNTIwM0MzNy44ODIgMjIuNjQyOCAzNi40OTEgMjIuMDcwOCAzNS4wMTU3IDIxLjgwMDlDMzUuMDEzNCAyMS44MTI0IDM1LjAxMjIgMjEuODIzOSAzNS4wMDk5IDIxLjgzNTRDMzQuODgzNCAyMi41MjQ1IDM0LjY4NjcgMjMuMjAzMyAzNC40MTc0IDIzLjg2MTRDMzUuNjYyIDI0LjA1OSAzNi44MDk1IDI0LjUxODQgMzcuNzg5NSAyNS4yMjI1QzM3Ljc4NiAyNS4yMzI4IDM3Ljc4MzYgMjUuMjQzMiAzNy43ODAxIDI1LjI1NDdDMzcuMjE0NiAyNy4wNTU2IDM2LjM2MjIgMjguNzUzMiAzNS4yNDc2IDMwLjI5OEMzNC4xNDU4IDMxLjgyMzMgMzIuODE0NSAzMy4xNjYgMzEuMjg4OSAzNC4yODgxQzI4LjEyMTcgMzYuNjE4NiAyNC4zNDkyIDM3Ljg0OTggMjAuMzc3NiAzNy44NDk4QzE3LjkxODggMzcuODQ5OCAxNS41MzUgMzcuMzc3OCAxMy4yOTE2IDM2LjQ0NzRDMTEuMTI0MyAzNS41NDgxIDkuMTc3MTggMzQuMjYwNSA3LjUwNDAyIDMyLjYxOTJDNS44MzA4NiAzMC45Nzc5IDQuNTE4MzUgMjkuMDY3OSAzLjYwMTU2IDI2Ljk0MTlDMi42NTMxNyAyNC43NDEyIDIuMTcxOTQgMjIuNDAyOCAyLjE3MTk0IDE5Ljk5MDhDMi4xNzE5NCAxNy41Nzg4IDIuNjUzMTcgMTUuMjQwMyAzLjYwMTU2IDEzLjAzOTdDNC41MTgzNSAxMC45MTM3IDUuODMwODYgOS4wMDM2IDcuNTA0MDIgNy4zNjIzQzkuMTc3MTggNS43MjEgMTEuMTI0MyA0LjQzMzQ2IDEzLjI5MTYgMy41MzQxNEMxNS41MzUgMi42MDM4IDE3LjkxODggMi4xMzE3NCAyMC4zNzc2IDIuMTMxNzRDMjQuMzQ5MiAyLjEzMTc0IDI4LjEyMTcgMy4zNjMwMSAzMS4yODg5IDUuNjkzNDVDMzIuODE0NSA2LjgxNTU5IDM0LjE0NTggOC4xNTgyNyAzNS4yNDc2IDkuNjgzNTZDMzYuMzYyMiAxMS4yMjg0IDM3LjIxNDYgMTIuOTI2IDM3Ljc4MDEgMTQuNzI2OUMzNy43ODM2IDE0LjczODQgMzcuNzg3MSAxNC43NDg3IDM3Ljc4OTUgMTQuNzU5MUMzNi44MDk1IDE1LjQ2MzEgMzUuNjYyIDE1LjkyMzcgMzQuNDE3NCAxNi4xMjAxQzM0LjY4NjcgMTYuNzc5NCAzNC44ODQ2IDE3LjQ1OTMgMzUuMDA5OSAxOC4xNDg1QzM1LjAxMjIgMTguMTYgMzUuMDEzNCAxOC4xNzAzIDM1LjAxNTcgMTguMTgxOEMzNi40OTEgMTcuOTExOSAzNy44ODA4IDE3LjMzOTkgMzkuMDk1IDE2LjQ2MjRDNDAuMjU3NiAxNS42MTgyIDQwLjAzMjggMTQuNjY0OSAzOS44NTYgMTQuMDk5OEMzNy4yOTMgNS45MzQ2NCAyOS41NDIgMCAyMC4zNzc2IDBDOS4xMjMzNCAwIDAgOC45NDk2MiAwIDE5Ljk4OTZDMCAzMS4wMjk2IDkuMTIzMzQgMzkuOTc5MyAyMC4zNzc2IDM5Ljk3OTNDMjkuNTQyIDM5Ljk3OTMgMzcuMjkzIDM0LjA0NDYgMzkuODU2IDI1Ljg3OTVDNDAuMDMyOCAyNS4zMTc4IDQwLjI1ODggMjQuMzY0NSAzOS4wOTUgMjMuNTIwM1oiIGZpbGw9IiMwMDZCRkYiLz4KPHBhdGggZD0iTTM0LjQxODcgMTYuMTIyNEMzMy45NjA5IDE2LjE5NDggMzMuNDkxNCAxNi4yMzI3IDMzLjAxMDIgMTYuMjMyN0MyOS45MjAzIDE2LjIzMjcgMjguNzYgMTUuMjI0MiAyNy40MTcgMTQuMDU2MUMyNi4xMjIgMTIuOTMwNSAyNC41MTA5IDExLjUyOTMgMjEuNTc2NyAxMS41MjkzSDE5LjgyNTFDMTcuNzA0NyAxMS41MjkzIDE1Ljc3NjMgMTIuMjgzOSAxNC4zOTU5IDEzLjY1NTNDMTMuMDQ4MiAxNC45OTQ1IDEyLjMwNDcgMTYuODI2NSAxMi4zMDQ3IDE4LjgxNThWMjEuMTY4MUMxMi4zMDQ3IDIzLjE1NzQgMTMuMDQ3IDI0Ljk5MDUgMTQuMzk1OSAyNi4zMjg2QzE1Ljc3NjMgMjcuNjk5OSAxNy43MDQ3IDI4LjQ1NDYgMTkuODI1MSAyOC40NTQ2SDIxLjU3NjdDMjQuNTEwOSAyOC40NTQ2IDI2LjEyMiAyNy4wNTMzIDI3LjQxNyAyNS45Mjc3QzI4Ljc2IDI0Ljc1OTYgMjkuOTIwMyAyMy43NTEyIDMzLjAxMDIgMjMuNzUxMkMzMy40OTAyIDIzLjc1MTIgMzMuOTYwOSAyMy43ODkxIDM0LjQxODcgMjMuODYxNEMzNC42ODggMjMuMjAzMyAzNC44ODQ3IDIyLjUyMzQgMzUuMDExMiAyMS44MzU0QzM1LjAxMzUgMjEuODIzOSAzNS4wMTQ3IDIxLjgxMjQgMzUuMDE3IDIxLjgwMDlDMzQuMzYyNSAyMS42ODE1IDMzLjY5MDQgMjEuNjIwNiAzMy4wMTAyIDIxLjYyMDZDMjUuOTEwMSAyMS42MjA2IDI2LjI3ODkgMjYuMzI0IDIxLjU3NjcgMjYuMzI0SDE5LjgyNTFDMTYuNTk4MyAyNi4zMjQgMTQuNDc2NiAyNC4wNjI0IDE0LjQ3NjYgMjEuMTY4MVYxOC44MTU4QzE0LjQ3NjYgMTUuOTIxNCAxNi41OTcxIDEzLjY1OTkgMTkuODI1MSAxMy42NTk5SDIxLjU3NjdDMjYuMjc4OSAxMy42NTk5IDI1LjkxMDEgMTguMzYzMyAzMy4wMTAyIDE4LjM2MzNDMzMuNjkwNCAxOC4zNjMzIDM0LjM2MjUgMTguMzAyNCAzNS4wMTcgMTguMTgyOUMzNS4wMTQ3IDE4LjE3MTUgMzUuMDEzNSAxOC4xNjExIDM1LjAxMTIgMTguMTQ5NkMzNC44ODU5IDE3LjQ2MTYgMzQuNjg4IDE2Ljc4MTcgMzQuNDE4NyAxNi4xMjI0WiIgZmlsbD0iIzBBRThGMCIvPgo8cGF0aCBkPSJNMzQuNDE4NyAxNi4xMjI0QzMzLjk2MDkgMTYuMTk0OCAzMy40OTE0IDE2LjIzMjcgMzMuMDEwMiAxNi4yMzI3QzI5LjkyMDMgMTYuMjMyNyAyOC43NiAxNS4yMjQyIDI3LjQxNyAxNC4wNTYxQzI2LjEyMiAxMi45MzA1IDI0LjUxMDkgMTEuNTI5MyAyMS41NzY3IDExLjUyOTNIMTkuODI1MUMxNy43MDQ3IDExLjUyOTMgMTUuNzc2MyAxMi4yODM5IDE0LjM5NTkgMTMuNjU1M0MxMy4wNDgyIDE0Ljk5NDUgMTIuMzA0NyAxNi44MjY1IDEyLjMwNDcgMTguODE1OFYyMS4xNjgxQzEyLjMwNDcgMjMuMTU3NCAxMy4wNDcgMjQuOTkwNSAxNC4zOTU5IDI2LjMyODZDMTUuNzc2MyAyNy42OTk5IDE3LjcwNDcgMjguNDU0NiAxOS44MjUxIDI4LjQ1NDZIMjEuNTc2N0MyNC41MTA5IDI4LjQ1NDYgMjYuMTIyIDI3LjA1MzMgMjcuNDE3IDI1LjkyNzdDMjguNzYgMjQuNzU5NiAyOS45MjAzIDIzLjc1MTIgMzMuMDEwMiAyMy43NTEyQzMzLjQ5MDIgMjMuNzUxMiAzMy45NjA5IDIzLjc4OTEgMzQuNDE4NyAyMy44NjE0QzM0LjY4OCAyMy4yMDMzIDM0Ljg4NDcgMjIuNTIzNCAzNS4wMTEyIDIxLjgzNTRDMzUuMDEzNSAyMS44MjM5IDM1LjAxNDcgMjEuODEyNCAzNS4wMTcgMjEuODAwOUMzNC4zNjI1IDIxLjY4MTUgMzMuNjkwNCAyMS42MjA2IDMzLjAxMDIgMjEuNjIwNkMyNS45MTAxIDIxLjYyMDYgMjYuMjc4OSAyNi4zMjQgMjEuNTc2NyAyNi4zMjRIMTkuODI1MUMxNi41OTgzIDI2LjMyNCAxNC40NzY2IDI0LjA2MjQgMTQuNDc2NiAyMS4xNjgxVjE4LjgxNThDMTQuNDc2NiAxNS45MjE0IDE2LjU5NzEgMTMuNjU5OSAxOS44MjUxIDEzLjY1OTlIMjEuNTc2N0MyNi4yNzg5IDEzLjY1OTkgMjUuOTEwMSAxOC4zNjMzIDMzLjAxMDIgMTguMzYzM0MzMy42OTA0IDE4LjM2MzMgMzQuMzYyNSAxOC4zMDI0IDM1LjAxNyAxOC4xODI5QzM1LjAxNDcgMTguMTcxNSAzNS4wMTM1IDE4LjE2MTEgMzUuMDExMiAxOC4xNDk2QzM0Ljg4NTkgMTcuNDYxNiAzNC42ODggMTYuNzgxNyAzNC40MTg3IDE2LjEyMjRaIiBmaWxsPSIjMEFFOEYwIi8+Cjwvc3ZnPgo="
+              h={"40px"}
+              w={"40px"}
+              alt="logo"
+            />
+          </Link>
+        </Box>
         <Spacer />
         <HStack
           display={{ base: "none", lg: "flex" }}
@@ -145,22 +217,47 @@ export const Navbar = ({handleLog}) => {
           spacing={10}
           w={{ md: "85%", lg: "84%" }}
         >
-          <Link to='/individuals'>
-          <Text fontSize="1rem" fontWeight="700" _hover={{ color: "#006BFF" }}>
-            Individuals
-          </Text>
+          <Link to="/individuals">
+            <Text
+              fontSize="1rem"
+              fontWeight="700"
+              _hover={{ color: "#006BFF" }}
+            >
+              Individuals
+            </Text>
           </Link>
-
-          <Link to='/enterprise'>
-          <Text fontSize="1rem" fontWeight="700" _hover={{ color: "#006BFF" }}>
-            Pricing
-          </Text>
+          <Link to="/teams">
+            <Text
+              fontSize="1rem"
+              fontWeight="700"
+              _hover={{ color: "#006BFF" }}
+            >
+              Teams
+            </Text>
           </Link>
-
-          <Link to='/resources'>
-          <Text >
-            <Resources/>
-          </Text>
+          <Link to="/enterprise">
+            <Text
+              fontSize="1rem"
+              fontWeight="700"
+              _hover={{ color: "#006BFF" }}
+            >
+              Enterprise
+            </Text>
+          </Link>
+          <Link to="/pricing">
+            <Text
+              fontSize="1rem"
+              fontWeight="700"
+              _hover={{ color: "#006BFF" }}
+            >
+              Pricing
+            </Text>
+          </Link>
+          <Link to="/resources">
+            <Text>
+              <Resources />
+              {/* <ChevronDownIcon display={{ base: "none", lg: "inline" }} /> */}
+            </Text>
           </Link>
         </HStack>
         <Spacer />
