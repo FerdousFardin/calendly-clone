@@ -12,7 +12,7 @@ import {
   createIcon,
   useColorModeValue,
 } from "@chakra-ui/react";
-import React from "react";
+import { useContext, useState, useRef } from "react";
 
 import {
   Modal,
@@ -23,32 +23,87 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import SignupBox from "../Auth/SignupBox";
+import SigninBox from "../Auth/SigninBox";
+import RegisterBox from "../Auth/RegisterBox";
 import { auth } from "../../firebase/Firebase";
+import { useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GlobalContext } from "../../App";
 
 export default function Hero() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const finalRef = React.useRef(null);
+
+  const { handleLog } = useContext(GlobalContext);
+
+  const [register, setRegister] = useState(false);
+
+  const navigate = useNavigate();
+
+  const finalRef = useRef(null);
+
+  const [user] = useAuthState(auth);
+
+  const postPHEvent = async () => {
+    const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        heading: "Getting Started",
+        time: "5 min",
+        type: "Tutorial",
+        email: user && user.email,
+      }),
+    });
+    const result = await data.json();
+    return result;
+  };
+
   const loginWithGoogle = () => {
-    console.log("login");
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-      .then((res) => {
-        console.log(res.user.accessToken);
+      .then(async (res) => {
+        handleLog(true);
+        onClose();
+        const resPH = await postPHEvent();
+        console.log(resPH.acknowledged);
+        navigate("/userevent/userhome/eventtype");
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   return (
     <>
       <Modal isOpen={isOpen} border={"1px solid red"}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign={"center"}>Get started today</ModalHeader>
+          <ModalHeader textAlign={"center"}>
+            {register ? "Get started today" : "Login with existing account"}
+          </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
-            <SignupBox loginWithGoogle={loginWithGoogle} log={"Login"} />
+            {!register ? (
+              <SigninBox
+                onClose={onClose}
+                setRegister={setRegister}
+                loginWithGoogle={loginWithGoogle}
+                type={"Sign up"}
+                handleLog={handleLog}
+              />
+            ) : (
+              <RegisterBox
+                onClose={onClose}
+                setRegister={setRegister}
+                loginWithGoogle={loginWithGoogle}
+                type={"Sign up"}
+                handleLog={handleLog}
+              />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -104,8 +159,8 @@ export default function Hero() {
               </Text>
             </Heading>
             <Text color={"gray.500"} fontSize={"1.7em"}>
-              Scheduler is your hub for scheduling <br /> meetings professionally
-              and efficiently,
+              Scheduler is your hub for scheduling <br /> meetings
+              professionally and efficiently,
               <br /> eliminating the hassle of back-and-forth <br />
               emails so you can get back to work.
             </Text>

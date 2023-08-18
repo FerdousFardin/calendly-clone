@@ -40,8 +40,13 @@ const EventTypes = () => {
     onOpen();
   };
 
+  const handleRemove = (_id) => {
+    const newList = events.filter((event) => event._id !== _id);
+    setEvents(newList);
+  };
+
   const handleDelete = async () => {
-    console.log(selectedId);
+    // console.log(selectedId);
     const res = await fetch(
       import.meta.env.VITE_APP_API + "/event?id=" + selectedId,
       {
@@ -49,8 +54,13 @@ const EventTypes = () => {
       }
     );
     const data = await res.json();
-    if (data.acknowledged) handleGetEvents();
+    if (data.acknowledged) {
+      setLoading(true);
+      handleRemove(selectedId);
+      setSelectedId("");
+    }
     onClose();
+    setTimeout(() => setLoading(false), 500);
     return;
   };
   useEffect(() => {

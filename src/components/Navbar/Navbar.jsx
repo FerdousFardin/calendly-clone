@@ -32,23 +32,20 @@ import {
   DrawerContent,
   DrawerCloseButton,
 } from "@chakra-ui/react";
-import SignupBox from "../Auth/SignupBox";
+import SigninBox from "../Auth/SigninBox";
 import Resources from "../Resources/Resources";
-import {
-  useAuthState,
-  useSignInWithEmailAndPassword,
-} from "react-firebase-hooks/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import RegisterBox from "../Auth/RegisterBox";
 
-export const Navbar = ({ handleLog }) => {
+export const Navbar = ({ handleLog, resolveTrue }) => {
   const navigate = useNavigate();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [opend, setOpend] = useState(false);
   const [goingUp, setGoingUp] = useState(false);
-  const [user] = useAuthState(auth);
-  const [signInWithEmailAndPassword, loading, error] =
-    useSignInWithEmailAndPassword(auth);
+  const [register, setRegister] = useState(false);
 
+  const [user] = useAuthState(auth);
   const postPHEvent = async () => {
     const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
       method: "POST",
@@ -75,14 +72,13 @@ export const Navbar = ({ handleLog }) => {
     }
   };
   const loginWithGoogle = () => {
-    console.log("login");
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(async (res) => {
-        handleLog();
+        handleLog(true);
         const resPH = await postPHEvent();
-        console.log(resPH.acknowledged);
-        navigate("/userevent/userhome/eventtype");
+        // console.log(resPH.acknowledged);
+        if (resPH.acknowledged) navigate("/userevent/userhome/eventtype");
       })
       .catch((err) => {
         console.log(err);
@@ -174,16 +170,31 @@ export const Navbar = ({ handleLog }) => {
       <Modal isOpen={isOpen} border={"1px solid red"}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader textAlign={"center"}>Get started today</ModalHeader>
+          <ModalHeader textAlign={"center"}>
+            {register ? "Get started today" : "Login with existing account"}
+          </ModalHeader>
           <ModalCloseButton onClick={onClose} />
           <ModalBody>
-            <SignupBox
-              login={signInWithEmailAndPassword}
-              loginLoading={loading}
-              loginError={error}
-              loginWithGoogle={loginWithGoogle}
-              log={"Sign up"}
-            />
+            {!register ? (
+              <SigninBox
+                onClose={onClose}
+                setRegister={setRegister}
+                loginWithGoogle={loginWithGoogle}
+                type={"Sign up"}
+                handleLog={handleLog}
+                resolveTrue={resolveTrue}
+              />
+            ) : (
+              <RegisterBox
+                onClose={onClose}
+                setRegister={setRegister}
+                loginWithGoogle={loginWithGoogle}
+                type={"Sign up"}
+                handleLog={handleLog}
+                postPHEvent={postPHEvent}
+                resolveTrue={resolveTrue}
+              />
+            )}
           </ModalBody>
         </ModalContent>
       </Modal>
@@ -286,11 +297,12 @@ export const Navbar = ({ handleLog }) => {
           </Button>
         </Box>
         <Box
+          ref={btnRef}
           fontSize={"2rem"}
           display={{ base: "block", lg: "none" }}
           ml={"10px"}
         >
-          <BiMenu ref={btnRef} onClick={() => setOpend(true)} />
+          <BiMenu onClick={() => setOpend(true)} />
         </Box>
       </Flex>
     </>

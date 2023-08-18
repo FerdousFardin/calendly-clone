@@ -32,13 +32,15 @@ import {
   useSignInWithEmailAndPassword,
   useSignInWithGoogle,
   useAuthState,
+  useSignOut,
 } from "react-firebase-hooks/auth";
 
 export function Navbar({ handleLog }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const [user, loading, error] = useAuthState(auth);
+  const [user, userLoading, userError] = useAuthState(auth);
+  const [signOut, signOutLoading, signOutError] = useSignOut(auth);
   const navigate = useNavigate();
-  console.log("user", user, loading);
+  console.log("user", user);
   return (
     <>
       <Box bg={useColorModeValue("white", "gray.900")} px={4} mx={"25rem"}>
@@ -67,11 +69,7 @@ export function Navbar({ handleLog }) {
           </HStack>
 
           <Flex alignItems={"center"}>
-            <HStack
-              as={"nav"}
-              marginLeft={"10rem"}
-              spacing={4}
-            >
+            <HStack as={"nav"} marginLeft={"10rem"} spacing={4}>
               <Link to={"/userevent/userhome"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
                   Home
@@ -82,7 +80,7 @@ export function Navbar({ handleLog }) {
                   Availabilty
                 </Button>
               </Link>
-              
+
               <Button
                 bg={"none"}
                 fontWeight={"semibold"}
@@ -142,15 +140,14 @@ export function Navbar({ handleLog }) {
                   </Box>{" "}
                   Account Settings
                 </MenuItem>
-                
+
                 <MenuItem>
                   <Box marginRight={3}>
                     <AiTwotoneCalendar size={18} />
                   </Box>
                   Calender Connections
                 </MenuItem>
-                
-                
+
                 <MenuItem>
                   <Box marginRight={3}>
                     <BsLink45Deg size={18} />
@@ -167,9 +164,12 @@ export function Navbar({ handleLog }) {
 
                 <MenuDivider />
                 <MenuItem
-                  onClick={() => {
-                    handleLog();
-                    navigate("/");
+                  onClick={async () => {
+                    const res = await signOut();
+                    if (res) {
+                      handleLog(false);
+                      setTimeout(() => navigate("/"), 1000);
+                    }
                   }}
                 >
                   <Box marginRight={3}>
