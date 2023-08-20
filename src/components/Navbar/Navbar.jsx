@@ -108,20 +108,6 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 </Text>
               </Link>
               <Divider />
-              <Link to="/teams">
-                {" "}
-                <Text cursor={"pointer"} pl={"18px"}>
-                  Teams
-                </Text>
-              </Link>
-              <Divider />
-              <Link to="/enterprise">
-                {" "}
-                <Text cursor={"pointer"} pl={"18px"}>
-                  Enterprise
-                </Text>
-              </Link>
-              <Divider />
               <Link to="/pricing">
                 {" "}
                 <Text cursor={"pointer"} pl={"18px"}>
@@ -142,7 +128,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                       fontWeight={"bold"}
                       pl={"auto"}
                     >
-                      <Text>Resources</Text>
+                      <Text>More</Text>
                     </Box>
                     <AccordionIcon />
                   </AccordionButton>
@@ -249,24 +235,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
               Individuals
             </Text>
           </Link>
-          <Link to="/teams">
-            <Text
-              fontSize="1rem"
-              fontWeight="700"
-              _hover={{ color: "#006BFF" }}
-            >
-              Teams
-            </Text>
-          </Link>
-          <Link to="/enterprise">
-            <Text
-              fontSize="1rem"
-              fontWeight="700"
-              _hover={{ color: "#006BFF" }}
-            >
-              Enterprise
-            </Text>
-          </Link>
+          
           <Link to="/pricing">
             <Text
               fontSize="1rem"
