@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   FormControl,
@@ -10,6 +10,16 @@ import {
   Text,
   Box,
   AbsoluteCenter,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogCloseButton,
+  AlertDialogBody,
+  AlertDialogFooter,
+  useDisclosure,
+  RadioGroup,
+  Radio,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -21,11 +31,23 @@ export default function SigninBox({
   setRegister,
   onClose,
   handleLog,
+  error: googleError,
 }) {
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
+  const [selectedRole, setSelectedRole] = useState(false);
+  const [role, setRole] = useState("");
+  const { isOpen, onOpen, onClose: roleClose } = useDisclosure();
+  const cancelRef = useRef();
 
+  const getUser = async (email, role) => {
+    const query = await fetch(
+      import.meta.env.VITE_APP_API + "/user" + `?email=${email}&role=${role}`
+    );
+    const res = await query.json();
+    console.log(res);
+  };
   const handleLogin = (e) => {
     setLoginLoading(true);
     e && e.preventDefault();
@@ -37,6 +59,7 @@ export default function SigninBox({
         .then(async (res) => {
           setError("");
           // console.log(res);
+          await getUser(email, role);
           onClose();
           handleLog(true);
           navigate("/userevent/userhome/eventtype");
@@ -90,6 +113,11 @@ export default function SigninBox({
                   Error: {error}
                 </Text>
               )}
+              {googleError.length > 0 && (
+                <Text color={"red.400"} w={"2xl"}>
+                  Error: {googleError}
+                </Text>
+              )}
               <Button
                 type="submit"
                 isLoading={loginLoading}
@@ -130,7 +158,7 @@ export default function SigninBox({
             </AbsoluteCenter>
           </Box>
           <Button
-            onClick={() => loginWithGoogle()}
+            onClick={onOpen}
             bg={"white"}
             variant={"outline"}
             colorScheme="blue.900"
@@ -144,6 +172,75 @@ export default function SigninBox({
           </Button>
         </Stack>
       </Stack>
+      <AlertDialog
+        motionPreset="slideInBottom"
+        leastDestructiveRef={cancelRef}
+        onClose={() => {
+          roleClose();
+          setSelectedRole(false);
+          setRole("");
+        }}
+        isOpen={isOpen}
+        isCentered
+      >
+        <AlertDialogOverlay />
+
+        <AlertDialogContent>
+          <AlertDialogHeader>Role Selection</AlertDialogHeader>
+          <AlertDialogCloseButton
+            onClick={() => {
+              roleClose();
+              setSelectedRole(false);
+              setRole("");
+            }}
+          />
+          <AlertDialogBody>
+            Please select your role before signing in
+            <RadioGroup
+              onChange={(value) => {
+                setRole(value);
+                setSelectedRole(true);
+              }}
+              value={role}
+              mt={5}
+            >
+              <Stack direction="row">
+                <Radio fontWeight="bold" value="Teacher">
+                  Teacher
+                </Radio>
+                <Radio fontWeight="bold" value="Student">
+                  Student
+                </Radio>
+              </Stack>
+            </RadioGroup>
+          </AlertDialogBody>
+          <AlertDialogFooter>
+            <Button
+              ref={cancelRef}
+              onClick={() => {
+                roleClose();
+                setSelectedRole(false);
+                setRole("");
+              }}
+            >
+              Close
+            </Button>
+            <Button
+              disabled={!selectedRole}
+              colorScheme="green"
+              onClick={() => {
+                loginWithGoogle(role);
+                roleClose();
+                setSelectedRole(false);
+                setRole("");
+              }}
+              ml={3}
+            >
+              Done
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </Flex>
   );
 }

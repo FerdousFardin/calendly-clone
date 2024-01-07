@@ -51,6 +51,9 @@ const EventTypes = () => {
       import.meta.env.VITE_APP_API + "/event?id=" + selectedId,
       {
         method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
     );
     const data = await res.json();

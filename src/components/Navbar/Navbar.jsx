@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Flex, Spacer, useDisclosure } from "@chakra-ui/react";
+import { Flex, Spacer, useDisclosure, useToast } from "@chakra-ui/react";
 import { HStack, VStack, Button, Box, Image } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
 import "./Navbar.css";
@@ -34,16 +34,19 @@ import {
 } from "@chakra-ui/react";
 import SigninBox from "../Auth/SigninBox";
 import Resources from "../Resources/Resources";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import RegisterBox from "../Auth/RegisterBox";
 
 export const Navbar = ({ handleLog, resolveTrue }) => {
   const navigate = useNavigate();
+  const toast = useToast();
+  const [signOut, signOutLoading, signOutError] = useSignOut(auth);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = React.useRef();
   const [opend, setOpend] = useState(false);
   const [goingUp, setGoingUp] = useState(false);
   const [register, setRegister] = useState(false);
+  const [error, setError] = useState("");
 
   const [user] = useAuthState(auth);
   const postPHEvent = async () => {
@@ -61,6 +64,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
       }),
     });
     const result = await data.json();
+    console.log("postPHResult", result);
     return result;
   };
 
@@ -71,17 +75,43 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
       setGoingUp(false);
     }
   };
-  const loginWithGoogle = () => {
+  const getUser = async (email, role) => {
+    const query = await fetch(
+      import.meta.env.VITE_APP_API + "/user" + `?email=${email}&role=${role}`
+    );
+    const res = await query.json();
+    return res;
+  };
+  const loginWithGoogle = (role) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(async (res) => {
+        setError("");
         handleLog(true);
         const resPH = await postPHEvent();
-        // console.log(resPH.acknowledged);
-        if (resPH.acknowledged) navigate("/userevent/userhome/eventtype");
+        const user = await getUser(res?.user?.email, role);
+        console.log("user.result", user.result);
+        if (resPH.acknowledged && user && user.result)
+          navigate("/userevent/userhome/eventtype");
+        else {
+          // sign;
+          const resOut = await signOut();
+          console.log("resOut", resOut);
+          if (resOut) {
+            handleLog(false);
+            onOpen();
+            toast({
+              title: `Could not find user in the database`,
+              status: "error",
+              isClosable: true,
+            });
+            setError("Could not find user in the database");
+          }
+        }
       })
       .catch((err) => {
         console.log(err);
+        setError(err.code);
       });
   };
   window.addEventListener("scroll", handleScroll);
@@ -169,6 +199,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 type={"Sign up"}
                 handleLog={handleLog}
                 resolveTrue={resolveTrue}
+                error={error}
               />
             ) : (
               <RegisterBox
@@ -179,6 +210,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 handleLog={handleLog}
                 postPHEvent={postPHEvent}
                 resolveTrue={resolveTrue}
+                error={error}
               />
             )}
           </ModalBody>
@@ -235,7 +267,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
               Individuals
             </Text>
           </Link>
-          
+
           <Link to="/pricing">
             <Text
               fontSize="1rem"

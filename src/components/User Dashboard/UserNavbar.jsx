@@ -40,7 +40,7 @@ export function Navbar({ handleLog }) {
   const [user, userLoading, userError] = useAuthState(auth);
   const [signOut, signOutLoading, signOutError] = useSignOut(auth);
   const navigate = useNavigate();
-  console.log("user", user);
+
   return (
     <>
       <Box bg={useColorModeValue("white", "gray.900")} px={4} mx={"25rem"}>
@@ -175,7 +175,7 @@ export function Navbar({ handleLog }) {
                   <Box marginRight={3}>
                     <IoIosLogOut size={18} />
                   </Box>
-                  LogOut
+                  Log Out
                 </MenuItem>
               </MenuList>
             </Menu>

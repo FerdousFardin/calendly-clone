@@ -22,31 +22,7 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
-const events = [
-  {
-    title: "Big Meeting",
-    allDay: true,
-    startDate: new Date(2022, 6, 8),
-    endDate: new Date(2022, 6, 14),
-    startTime: new Date(2022, 6, 8).setHours(12),
-    endTime: new Date(2022, 6, 8).setHours(1),
-  },
-  {
-    title: "Vacation",
-    startDate: new Date(2022, 6, 10),
-    endDate: new Date(2022, 6, 10),
-  },
-  {
-    title: "Conferance",
-    startDate: new Date(2022, 6, 18),
-    endDate: new Date(2022, 6, 20),
-  },
-  {
-    title: "Team Meet",
-    startDate: new Date(2022, 6, 23),
-    endDate: new Date(2022, 6, 25),
-  },
-];
+const events = [];
 
 const Calendar2 = () => {
   const [newEvent, setNewEvent] = useState({
