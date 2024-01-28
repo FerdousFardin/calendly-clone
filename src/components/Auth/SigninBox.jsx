@@ -20,6 +20,7 @@ import {
   useDisclosure,
   RadioGroup,
   Radio,
+  FormLabel,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithEmailAndPassword } from "firebase/auth";
@@ -37,7 +38,7 @@ export default function SigninBox({
   const [error, setError] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [selectedRole, setSelectedRole] = useState(false);
-  const [role, setRole] = useState("");
+  const [role, setRole] = useState("Teacher");
   const { isOpen, onOpen, onClose: roleClose } = useDisclosure();
   const cancelRef = useRef();
 
@@ -46,7 +47,7 @@ export default function SigninBox({
       import.meta.env.VITE_APP_API + "/user" + `?email=${email}&role=${role}`
     );
     const res = await query.json();
-    console.log(res);
+    return res;
   };
   const handleLogin = (e) => {
     setLoginLoading(true);
@@ -58,11 +59,16 @@ export default function SigninBox({
       signInWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
           setError("");
-          // console.log(res);
-          await getUser(email, role);
-          onClose();
-          handleLog(true);
-          navigate("/userevent/userhome/eventtype");
+
+          const findUser = await getUser(email, role);
+          console.log({ findUser });
+          if (findUser && findUser.result) {
+            localStorage.setItem("Role", role);
+            onClose();
+            handleLog(true);
+            navigate("/userevent/userhome/eventtype");
+          }
+          setError("Wrong Role!");
         })
         .catch((err) => {
           setTimeout(() => {
@@ -108,6 +114,19 @@ export default function SigninBox({
                 _placeholder={{ color: "gray.500" }}
                 type="password"
               />
+              <div>
+                <FormLabel>Select Role</FormLabel>
+                <RadioGroup
+                  required={true}
+                  onChange={(value) => setRole(value)}
+                  value={role}
+                >
+                  <Stack direction="row">
+                    <Radio value="Teacher">Teacher</Radio>
+                    <Radio value="Student">Student</Radio>
+                  </Stack>
+                </RadioGroup>
+              </div>
               {error.length > 0 && (
                 <Text color={"red.400"} w={"2xl"}>
                   Error: {error}

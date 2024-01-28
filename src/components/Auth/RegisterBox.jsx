@@ -29,8 +29,21 @@ export default function RegisterBox({
   const [error, setError] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
   const [gender, setGender] = useState("male");
+  const [role, setRole] = useState("Teacher");
 
   const navigate = useNavigate();
+  const postUserAdd = async (user) => {
+    const req = await fetch(`${import.meta.env.VITE_APP_API}/user`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+    const data = await req.json();
+    return data;
+  };
   const handleRegister = (e) => {
     setRegisterLoading(true);
     e && e.preventDefault();
@@ -42,7 +55,6 @@ export default function RegisterBox({
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
           setError("");
-          //   console.log(res.user);
           onClose();
           updateProfile(res.user, {
             displayName: name,
@@ -52,10 +64,13 @@ export default function RegisterBox({
                 : "https://i.postimg.cc/50wYCSMc/female.png",
           })
             .then(async () => {
-              // Profile updated!
-              // ...
               const resPH = await postPHEvent();
-              if (resPH.acknowledged) {
+              const addUserDB = await postUserAdd({
+                email: email,
+                password: password,
+                role,
+              });
+              if (resPH.acknowledged && addUserDB.acknowledged) {
                 handleLog(true);
                 navigate("/userevent/userhome/eventtype");
               }
@@ -131,7 +146,7 @@ export default function RegisterBox({
                 />
               </div>
               <div>
-                <FormLabel>Select gender</FormLabel>
+                <FormLabel>Select Gender</FormLabel>
                 <RadioGroup
                   onChange={(value) => setGender(value)}
                   value={gender}
@@ -139,6 +154,15 @@ export default function RegisterBox({
                   <Stack direction="row">
                     <Radio value="male">Male</Radio>
                     <Radio value="female">Female</Radio>
+                  </Stack>
+                </RadioGroup>
+              </div>
+              <div>
+                <FormLabel>Select Role</FormLabel>
+                <RadioGroup onChange={(value) => setRole(value)} value={role}>
+                  <Stack direction="row">
+                    <Radio value="Teacher">Teacher</Radio>
+                    <Radio value="Student">Student</Radio>
                   </Stack>
                 </RadioGroup>
               </div>

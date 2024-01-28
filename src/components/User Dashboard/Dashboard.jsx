@@ -12,10 +12,10 @@ import {
   Heading,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import {AddIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
-export  function Dashboard() {
+export function Dashboard() {
   return (
     <>
       <Box
@@ -52,19 +52,13 @@ export  function Dashboard() {
                       <Box mr={4}>{/* <BsBoxArrowUpRight/>  */}</Box>
                       Help Center
                     </MenuItem>
-                    <MenuItem>
-                      Chat With Us
-                    </MenuItem>
+                    <MenuItem>Chat With Us</MenuItem>
                   </MenuList>
                 </Menu>
               </Button>
             </HStack>
 
-            <HStack
-              as={"nav"}
-              spacing={4}
-              justifyContent={"space-between"}            
-            >
+            <HStack as={"nav"} spacing={4} justifyContent={"space-between"}>
               <Link to={"/userevent/userhome/eventtype"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
                   Event Types
@@ -75,28 +69,33 @@ export  function Dashboard() {
                   Scheduled Events
                 </Button>
               </Link>
-    
+
               <Link to={"/userevent/userhome/routingforms"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
                   Routing Forms
                 </Button>
               </Link>
+              <Link to={"/userevent/userhome/availability"}>
+                <Button bg={"none"} fontWeight={"semibold"}>
+                  Availability
+                </Button>
+              </Link>
             </HStack>
           </VStack>
           <Flex alignItems={"center"}>
-            <Link to={'/userevent/userhome/eventforms'}>
-            <Button
-              variant={"solid"}
-              bg={"#3372cc"}
-              color={"white"}
-              size={"lg"}
-              mr={4}
-              leftIcon={<AddIcon />}
-              borderRadius={50}
+            <Link to={"/userevent/userhome/eventforms"}>
+              <Button
+                variant={"solid"}
+                bg={"#3372cc"}
+                color={"white"}
+                size={"lg"}
+                mr={4}
+                leftIcon={<AddIcon />}
+                borderRadius={50}
               >
-              Create
-            </Button>
-              </Link>
+                Create
+              </Button>
+            </Link>
           </Flex>
         </Flex>
       </Box>

@@ -75,11 +75,11 @@ export function Navbar({ handleLog }) {
                   Home
                 </Button>
               </Link>
-              <Link to={"/userevent/userhome/availability"}>
+              {/* <Link to={"/userevent/userhome/availability"}>
                 <Button bg={"none"} fontWeight={"semibold"}>
                   Availabilty
                 </Button>
-              </Link>
+              </Link> */}
 
               <Button
                 bg={"none"}
@@ -168,6 +168,7 @@ export function Navbar({ handleLog }) {
                     const res = await signOut();
                     if (res) {
                       handleLog(false);
+                      localStorage.removeItem("Role");
                       setTimeout(() => navigate("/"), 1000);
                     }
                   }}

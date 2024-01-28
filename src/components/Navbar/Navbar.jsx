@@ -98,6 +98,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
           const resOut = await signOut();
           console.log("resOut", resOut);
           if (resOut) {
+            localStorage.removeItem("Role");
             handleLog(false);
             onOpen();
             toast({
