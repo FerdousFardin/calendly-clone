@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import {
   Button,
   FormControl,
@@ -63,7 +64,7 @@ export default function SigninBox({
           const findUser = await getUser(email, role);
           console.log({ findUser });
           if (findUser && findUser.result) {
-            localStorage.setItem("Role", role);
+            await AsyncLocalStorage.setItem("Role", role);
             onClose();
             handleLog(true);
             navigate("/userevent/userhome/eventtype");

@@ -10,6 +10,7 @@
   "dependencies": {
     "@chakra-ui/icons": "^2.0.4",
     "@chakra-ui/react": "^2.2.4",
+    "@createnextapp/async-local-storage": "^1.0.1",
     "@emotion/react": "^11.9.3",
     "@emotion/styled": "^11.9.3",
     "aos": "^2.3.4",

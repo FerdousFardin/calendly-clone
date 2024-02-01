@@ -3,6 +3,7 @@
 }
 .container {
   display: flex;
+  flex-direction: column;
   height: 85vh;
 }
 
@@ -45,4 +46,19 @@ input {
 }
 .height-600 {
   height: 600px;
+}
+.box {
+  float: left;
+  height: 15px;
+  width: 15px;
+  margin: 15px;
+  margin-right: 0;
+  border: 0.1px solid grey;
+  clear: both;
+}
+.available {
+  background-color: lightgreen;
+}
+.not-available {
+  background-color: lightgrey;
 }

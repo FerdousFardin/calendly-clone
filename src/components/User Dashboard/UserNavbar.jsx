@@ -17,7 +17,7 @@ import {
   Text,
   Image,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import { FaUserAlt } from "react-icons/fa";
 import { ImCreditCard } from "react-icons/im";
 import { AiTwotoneCalendar, AiOutlineAppstore } from "react-icons/ai";
@@ -168,7 +168,7 @@ export function Navbar({ handleLog }) {
                     const res = await signOut();
                     if (res) {
                       handleLog(false);
-                      localStorage.removeItem("Role");
+                      await AsyncLocalStorage.removeItem("Role");
                       setTimeout(() => navigate("/"), 1000);
                     }
                   }}

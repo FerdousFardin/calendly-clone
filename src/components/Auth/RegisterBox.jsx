@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import {
   Button,
   FormControl,
@@ -13,6 +13,14 @@ import {
   FormLabel,
   Box,
   AbsoluteCenter,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogCloseButton,
+  AlertDialogBody,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogFooter,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -30,8 +38,12 @@ export default function RegisterBox({
   const [registerLoading, setRegisterLoading] = useState(false);
   const [gender, setGender] = useState("male");
   const [role, setRole] = useState("Teacher");
+  const [selectedRole, setSelectedRole] = useState(false);
 
+  const { isOpen, onOpen, onClose: roleClose } = useDisclosure();
+  const cancelRef = useRef();
   const navigate = useNavigate();
+
   const postUserAdd = async (user) => {
     const req = await fetch(`${import.meta.env.VITE_APP_API}/user`, {
       method: "POST",
@@ -211,7 +223,7 @@ export default function RegisterBox({
             </AbsoluteCenter>
           </Box>
           <Button
-            onClick={() => loginWithGoogle()}
+            onClick={onOpen}
             bg={"white"}
             variant={"outline"}
             colorScheme="blue.900"
@@ -223,6 +235,75 @@ export default function RegisterBox({
           >
             {type} with Google
           </Button>
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={() => {
+              roleClose();
+              setSelectedRole(false);
+              setRole("");
+            }}
+            isOpen={isOpen}
+            isCentered
+          >
+            <AlertDialogOverlay />
+
+            <AlertDialogContent>
+              <AlertDialogHeader>Role Selection</AlertDialogHeader>
+              <AlertDialogCloseButton
+                onClick={() => {
+                  roleClose();
+                  setSelectedRole(false);
+                  setRole("");
+                }}
+              />
+              <AlertDialogBody>
+                Please select your role before signing in
+                <RadioGroup
+                  onChange={(value) => {
+                    setRole(value);
+                    setSelectedRole(true);
+                  }}
+                  value={role}
+                  mt={5}
+                >
+                  <Stack direction="row">
+                    <Radio fontWeight="bold" value="Teacher">
+                      Teacher
+                    </Radio>
+                    <Radio fontWeight="bold" value="Student">
+                      Student
+                    </Radio>
+                  </Stack>
+                </RadioGroup>
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button
+                  ref={cancelRef}
+                  onClick={() => {
+                    roleClose();
+                    setSelectedRole(false);
+                    setRole("");
+                  }}
+                >
+                  Close
+                </Button>
+                <Button
+                  disabled={!selectedRole}
+                  colorScheme="green"
+                  onClick={() => {
+                    loginWithGoogle(role);
+                    roleClose();
+                    setSelectedRole(false);
+                    setRole("");
+                  }}
+                  ml={3}
+                >
+                  Done
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </Stack>
       </Stack>
     </Flex>

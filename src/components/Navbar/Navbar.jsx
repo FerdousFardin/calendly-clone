@@ -9,6 +9,7 @@ import { Divider } from "@chakra-ui/react";
 import { BiMenu } from "react-icons/bi";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import {
   Accordion,
   AccordionItem,
@@ -91,14 +92,15 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
         const resPH = await postPHEvent();
         const user = await getUser(res?.user?.email, role);
         console.log("user.result", user.result);
-        if (resPH.acknowledged && user && user.result)
+        if (resPH.acknowledged && user && user.result) {
+          await AsyncLocalStorage.setItem("Role", role);
           navigate("/userevent/userhome/eventtype");
-        else {
+        } else {
           // sign;
           const resOut = await signOut();
-          console.log("resOut", resOut);
+
           if (resOut) {
-            localStorage.removeItem("Role");
+            await AsyncLocalStorage.removeItem("Role");
             handleLog(false);
             onOpen();
             toast({
