@@ -50,24 +50,6 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
   const [error, setError] = useState("");
 
   const [user] = useAuthState(auth);
-  const postPHEvent = async () => {
-    const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        heading: "Getting Started",
-        time: "5 min",
-        type: "Tutorial",
-        email: user && user.email,
-      }),
-    });
-    const result = await data.json();
-    console.log("postPHResult", result);
-    return result;
-  };
 
   const handleScroll = () => {
     if (window.scrollY >= 104) {
@@ -89,10 +71,9 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
       .then(async (res) => {
         setError("");
         handleLog(true);
-        const resPH = await postPHEvent();
         const user = await getUser(res?.user?.email, role);
-        console.log("user.result", user.result);
-        if (resPH.acknowledged && user && user.result) {
+
+        if (user && user.result) {
           await AsyncLocalStorage.setItem("Role", role);
           navigate("/userevent/userhome/eventtype");
         } else {
@@ -211,7 +192,6 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 loginWithGoogle={loginWithGoogle}
                 type={"Sign up"}
                 handleLog={handleLog}
-                postPHEvent={postPHEvent}
                 resolveTrue={resolveTrue}
                 error={error}
               />
@@ -240,6 +220,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
             <Image
               src="https://i.postimg.cc/CxDV6G3h/scheduler-removebg-preview.png"
               w="auto"
+              objectFit="contain"
               alt="Dan Abramov"
             />
           </Link>
@@ -295,7 +276,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
             variant="solid"
             w="131px"
             height="51px"
-            borderRadius="39px"
+            borderRadius="99999px"
           >
             My Account
           </Button>

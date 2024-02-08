@@ -8,11 +8,11 @@ import EventTypes from "../components/User Dashboard/EventTypes";
 import ScheduledEvents from "../components/User Dashboard/ScheduledEvents";
 import RoutingForms from "../components/User Dashboard/RoutingForms";
 import EventForm from "../components/User Dashboard/EventForm";
-export const MainRoutes = () => {
+export const MainRoutes = ({ log }) => {
   return (
     <div>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home log={log} />} />
         <Route path="/individuals" element={<Individuals />} />
         <Route path="/userevent/userhome" element={<UserHome />} />
         <Route path="/userevent/userhome/eventtype" element={<EventTypes />} />

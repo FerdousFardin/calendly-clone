@@ -22,6 +22,17 @@ import { RiSettings2Fill, RiDeleteBin6Fill } from "react-icons/ri";
 import { MdOutlineKeyboardArrowDown, MdEdit } from "react-icons/md";
 import { colors } from "../../data/data";
 export default function EventCard({ event, handleOpen }) {
+  const convertDetailedTime = (isoDateString) => {
+    const dateObject = new Date(isoDateString);
+
+    const options = {
+      day: "numeric",
+      month: "short",
+    };
+
+    const formattedDateString = dateObject.toLocaleString("en-US", options);
+    return formattedDateString;
+  };
   return (
     <Center py={6}>
       <Box
@@ -85,7 +96,9 @@ export default function EventCard({ event, handleOpen }) {
             {event && event.heading}
           </Heading>
           <Text fontWeight={400} color={"gray.500"} mb={4}>
-            {event && event.time}, {event && event.type}
+            {event && event.time},{" "}
+            {event && event.date ? convertDetailedTime(event.date) + "," : ""}{" "}
+            {event && event.type}
           </Text>
 
           <Link href={"#"} color={"blue.500"}>

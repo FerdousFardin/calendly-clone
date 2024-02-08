@@ -1,4 +1,4 @@
-import { React } from "react";
+import { React, useState } from "react";
 import {
   Box,
   Flex,
@@ -25,7 +25,7 @@ import { MdPeople } from "react-icons/md";
 import { BsFillLockFill, BsLink45Deg, BsBoxArrowUpRight } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown, MdOutlineLiveHelp } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/Firebase.js";
 import {
@@ -39,30 +39,52 @@ export function Navbar({ handleLog }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [user, userLoading, userError] = useAuthState(auth);
   const [signOut, signOutLoading, signOutError] = useSignOut(auth);
+  const [goingUp, setGoingUp] = useState(false);
+
   const navigate = useNavigate();
+  const route = useLocation();
+
+  const activeStatus = (path) => {
+    if (path === undefined) {
+      return route.pathname === "/";
+    }
+    const pathRegex = new RegExp(path);
+    return pathRegex.test(route.pathname);
+  };
+
+  const handleScroll = () => {
+    if (window.scrollY >= 104) {
+      setGoingUp(true);
+    } else {
+      setGoingUp(false);
+    }
+  };
+  window.addEventListener("scroll", handleScroll);
 
   return (
     <>
       <Box bg={useColorModeValue("white", "gray.900")} px={4} mx={"25rem"}>
         <Flex
-          h={16}
+          className={goingUp ? "shadow_btm" : "no_shadow"}
+          pos="fixed"
+          top="0"
+          left="0"
+          zIndex={2}
+          w="100%"
+          h="104"
+          bg="white"
+          px={{ base: "6%", md: "5%", lg: "4%" }}
+          alignItems="center"
           justifyContent="space-between"
-          alignItems={"center"}
-          w={["90%", "85%", "80%"]}
-          py={4}
-          maxW="container.lg"
-          mx="auto"
         >
           <HStack spacing={8} alignItems={"center"}>
             <Box>
               <Link to={"/"}>
                 <Image
-                  size={""}
-                  borderRadius="full"
-                  boxSize="50px"
-                  src={
-                    "https://assets.calendly.com/packs/frontend/media/logo-square-cd364a3c33976d32792a.png"
-                  }
+                  src="https://i.postimg.cc/CxDV6G3h/scheduler-removebg-preview.png"
+                  w="auto"
+                  objectFit="contain"
+                  alt="Dan Abramov"
                 />
               </Link>
             </Box>
@@ -70,16 +92,24 @@ export function Navbar({ handleLog }) {
 
           <Flex alignItems={"center"}>
             <HStack as={"nav"} marginLeft={"10rem"} spacing={4}>
-              <Link to={"/userevent/userhome"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
+              <Link to={"/"}>
+                <Button
+                  isActive={activeStatus()}
+                  bg={"none"}
+                  fontWeight={"semibold"}
+                >
                   Home
                 </Button>
               </Link>
-              {/* <Link to={"/userevent/userhome/availability"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
-                  Availabilty
+              <Link to={"/userevent/userhome/eventtype"}>
+                <Button
+                  isActive={activeStatus("userhome")}
+                  bg={"none"}
+                  fontWeight={"semibold"}
+                >
+                  Dashboard
                 </Button>
-              </Link> */}
+              </Link>
 
               <Button
                 bg={"none"}

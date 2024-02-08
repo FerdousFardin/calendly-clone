@@ -11,20 +11,27 @@ import {
   useColorModeValue,
   Heading,
 } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
-import { AddIcon } from "@chakra-ui/icons";
+import { Link, useLocation } from "react-router-dom";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 export function Dashboard() {
+  const route = useLocation();
+
+  const activeStatus = (path) => {
+    const pathRegex = new RegExp(path);
+    return pathRegex.test(route.pathname);
+  };
   return (
     <>
       <Box
+        position={"relative"}
         bg={useColorModeValue("white", "gray.900")}
         px={4}
         my={"5rem"}
         mx={"25rem"}
       >
         <Flex
+          mt={150}
           h={16}
           justifyContent="space-between"
           alignItems={"center"}
@@ -60,43 +67,34 @@ export function Dashboard() {
 
             <HStack as={"nav"} spacing={4} justifyContent={"space-between"}>
               <Link to={"/userevent/userhome/eventtype"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
+                <Button
+                  isActive={activeStatus("eventtype")}
+                  bg={"none"}
+                  fontWeight={"semibold"}
+                >
                   Event Types
                 </Button>
               </Link>
               <Link to={"/userevent/userhome/scheduledevents"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
+                <Button
+                  isActive={activeStatus("scheduledevents")}
+                  bg={"none"}
+                  fontWeight={"semibold"}
+                >
                   Scheduled Events
                 </Button>
               </Link>
-
-              <Link to={"/userevent/userhome/routingforms"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
-                  Routing Forms
-                </Button>
-              </Link>
               <Link to={"/userevent/userhome/availability"}>
-                <Button bg={"none"} fontWeight={"semibold"}>
+                <Button
+                  isActive={activeStatus("availability")}
+                  bg={"none"}
+                  fontWeight={"semibold"}
+                >
                   Availability
                 </Button>
               </Link>
             </HStack>
           </VStack>
-          <Flex alignItems={"center"}>
-            <Link to={"/userevent/userhome/eventforms"}>
-              <Button
-                variant={"solid"}
-                bg={"#3372cc"}
-                color={"white"}
-                size={"lg"}
-                mr={4}
-                leftIcon={<AddIcon />}
-                borderRadius={50}
-              >
-                Create
-              </Button>
-            </Link>
-          </Flex>
         </Flex>
       </Box>
     </>

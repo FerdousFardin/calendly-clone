@@ -19,14 +19,14 @@ import React, { useEffect, useState } from "react";
 import { auth } from "../../firebase/Firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import AsyncLocalStorage from "@createnextapp/async-local-storage";
+import { Dashboard } from "./Dashboard.jsx";
 
-const ScheduledEvents = () => {
+const ScheduledEvents = ({ isVisible = true }) => {
   const [user] = useAuthState(auth);
   const [loading, setLoading] = useState(true);
   const [allEvents, setAllEvents] = useState([]);
   const [allEventsObj, setAllEventsObj] = useState([]);
   const [role, setRole] = useState("");
-  console.log(allEventsObj);
 
   const getDetails = async () => {
     const roleFrmStrg = await AsyncLocalStorage.getItem("Role");
@@ -107,76 +107,100 @@ const ScheduledEvents = () => {
 
   if (loading)
     return (
-      <Box
-        display="flex"
-        height="70vh"
-        width="100%"
-        flexDirection={"column"}
-        justifyContent="center"
-        alignItems="center"
-        color="gray.400"
-        gap={5}
-      >
-        <Spinner size="xl" />
-        <Heading as="h4" size="l" color="gray.400">
-          Retreving data from the server, please wait
-        </Heading>
-      </Box>
+      <>
+        {" "}
+        {isVisible && <Dashboard />}
+        <Box
+          display="flex"
+          height="70vh"
+          width="100%"
+          flexDirection={"column"}
+          justifyContent="center"
+          alignItems="center"
+          color="gray.400"
+          gap={5}
+        >
+          <Spinner size="xl" />
+          <Heading as="h4" size="l" color="gray.400">
+            Retreving data from the server, please wait
+          </Heading>
+        </Box>
+      </>
+    );
+  if (allEventsObj.length > 0)
+    return (
+      <>
+        {isVisible && <Dashboard />}
+        <TableContainer>
+          <Table variant="simple">
+            {isVisible && <TableCaption>Your Scheduled Events</TableCaption>}
+            <Thead>
+              <Tr>
+                <Th>Event Title</Th>
+                <Th>Hosted By</Th>
+                <Th>Availability</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {allEventsObj.map((event) => {
+                const { _id, schedule, email } = event;
+                return (
+                  <Tr key={_id}>
+                    <Td>{schedule.title}</Td>
+                    <Td>{email}</Td>
+                    <Td>
+                      {schedule.isAvailable ? (
+                        <Text color="lightgreen">Available</Text>
+                      ) : (
+                        <Text color="lightgray">Not Available</Text>
+                      )}
+                    </Td>
+                    <Td>
+                      <Stack flexDirection="row">
+                        {schedule.isAvailable === false && (
+                          <Button
+                            onClick={() => handleCancel(event)}
+                            size="sm"
+                            colorScheme="teal"
+                          >
+                            Cancel Schedule
+                          </Button>
+                        )}
+                        {role === "Teacher" && (
+                          <Button
+                            onClick={() => handleDelete(_id)}
+                            size="sm"
+                            colorScheme="red"
+                          >
+                            Delete
+                          </Button>
+                        )}
+                      </Stack>
+                    </Td>
+                  </Tr>
+                );
+              })}
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </>
     );
   return (
-    <TableContainer>
-      <Table variant="simple">
-        <TableCaption>Imperial to metric conversion factors</TableCaption>
-        <Thead>
-          <Tr>
-            <Th>Event Title</Th>
-            <Th>Hosted By</Th>
-            <Th>Availability</Th>
-            <Th>Actions</Th>
-          </Tr>
-        </Thead>
-        <Tbody>
-          {allEventsObj.map((event) => {
-            const { _id, schedule, email } = event;
-            return (
-              <Tr key={_id}>
-                <Td>{schedule.title}</Td>
-                <Td>{email}</Td>
-                <Td>
-                  {schedule.isAvailable ? (
-                    <Text color="lightgreen">Available</Text>
-                  ) : (
-                    <Text color="lightgray">Not Available</Text>
-                  )}
-                </Td>
-                <Td>
-                  <Stack flexDirection="row">
-                    {schedule.isAvailable === false && (
-                      <Button
-                        onClick={() => handleCancel(event)}
-                        size="sm"
-                        colorScheme="teal"
-                      >
-                        Cancel Schedule
-                      </Button>
-                    )}
-                    {role === "Teacher" && (
-                      <Button
-                        onClick={() => handleDelete(_id)}
-                        size="sm"
-                        colorScheme="red"
-                      >
-                        Delete
-                      </Button>
-                    )}
-                  </Stack>
-                </Td>
-              </Tr>
-            );
-          })}
-        </Tbody>
-      </Table>
-    </TableContainer>
+    <>
+      {isVisible && <Dashboard />}
+      <Box
+        display="flex"
+        height="50vh"
+        width="100%"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Heading as="h4" size="l" color="gray.400">
+          No Scheduled Events
+        </Heading>
+      </Box>
+    </>
   );
 };
 

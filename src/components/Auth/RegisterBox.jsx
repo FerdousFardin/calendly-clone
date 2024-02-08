@@ -32,7 +32,6 @@ export default function RegisterBox({
   setRegister,
   onClose,
   handleLog,
-  postPHEvent,
 }) {
   const [error, setError] = useState("");
   const [registerLoading, setRegisterLoading] = useState(false);
@@ -56,14 +55,33 @@ export default function RegisterBox({
     const data = await req.json();
     return data;
   };
+
+  const validateEmail = (email) => {
+    const pattern =
+      /^(?=.*@(?:lus\.ac\.bd|gmail\.com)$)[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    return pattern.test(email);
+  };
+
   const handleRegister = (e) => {
     setRegisterLoading(true);
+    setError("");
     e && e.preventDefault();
     if (e) {
       const form = e.target;
       const email = form.email.value;
       const name = form.userName.value;
       const password = form.password.value;
+      const emailValidate = validateEmail(email);
+
+      if (emailValidate === false) {
+        setError("Invalid Email! Please enter a valid email");
+        setRegisterLoading(false);
+        form.email.focus();
+        form.email.style.borderColor = "red";
+        form.email.style.outlineColor = "red";
+        return;
+      }
       createUserWithEmailAndPassword(auth, email, password)
         .then(async (res) => {
           setError("");
@@ -76,7 +94,7 @@ export default function RegisterBox({
                 : "https://i.postimg.cc/50wYCSMc/female.png",
           })
             .then(async () => {
-              const resPH = await postPHEvent();
+              // const resPH = await postPHEvent();
               const addUserDB = await postUserAdd({
                 email: email,
                 password: password,

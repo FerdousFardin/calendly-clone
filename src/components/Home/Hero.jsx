@@ -37,6 +37,7 @@ export default function Hero() {
   const { handleLog } = useContext(GlobalContext);
 
   const [register, setRegister] = useState(false);
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -73,6 +74,7 @@ export default function Hero() {
         navigate("/userevent/userhome/eventtype");
       })
       .catch((err) => {
+        setError(err);
         console.log(err);
       });
   };
@@ -92,8 +94,9 @@ export default function Hero() {
                 onClose={onClose}
                 setRegister={setRegister}
                 loginWithGoogle={loginWithGoogle}
-                type={"Sign up"}
+                type={"Sign in"}
                 handleLog={handleLog}
+                error={error}
               />
             ) : (
               <RegisterBox
@@ -168,26 +171,12 @@ export default function Hero() {
               spacing={{ base: 4, sm: 6 }}
               direction={{ base: "column", sm: "row" }}
             >
-              <Box position={"relative"} w={"100%"}>
-                <Input
-                  boxShadow={"rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;"}
-                  focusBorderColor="gray.400"
-                  placeholder="Enter your email"
-                  h={"4.5em"}
-                  w={"70%"}
-                  pl={"2em"}
-                  borderRadius={"40px"}
-                  outline={"none"}
-                />
+              <Box>
                 <Button
-                  zIndex={1}
-                  top={0}
-                  right={"22%"}
-                  position={"absolute"}
+                  w="131px"
+                  height="51px"
                   colorScheme={"blue"}
-                  w={"120px"}
-                  h={"100%"}
-                  borderRadius={"40px"}
+                  borderRadius={"99999px"}
                   onClick={onOpen}
                 >
                   Login

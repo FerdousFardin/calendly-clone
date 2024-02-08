@@ -33,6 +33,7 @@ import {
 } from "@chakra-ui/react";
 import { auth } from "../../firebase/Firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Dashboard } from "../User Dashboard/Dashboard.jsx";
 
 const locales = {
   "en-US": "date-fns/locale/en-US",
@@ -257,6 +258,7 @@ const Calendar2 = () => {
     );
   return (
     <div className="App">
+      <Dashboard />
       <div className="container">
         <div className="calendar height-600">
           {/* Calendar is imported from react-Big-Calendar */}

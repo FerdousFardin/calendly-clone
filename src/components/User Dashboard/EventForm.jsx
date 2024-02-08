@@ -9,12 +9,14 @@ import {
   Input,
   Textarea,
   Select,
+  Stack,
 } from "@chakra-ui/react";
 import { times } from "../../data/data";
 import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/Firebase";
+import DatePicker from "react-datepicker";
 
 const EventForm = () => {
   const navigate = useNavigate();
@@ -23,6 +25,7 @@ const EventForm = () => {
   const [heading, setHeading] = useState("");
   const [time, setTime] = useState(5);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(0);
 
   const postEvent = async () => {
     setLoading(true);
@@ -35,6 +38,7 @@ const EventForm = () => {
       body: JSON.stringify({
         heading,
         time: `${time} min`,
+        date: date,
         type,
         email: user && user.email,
       }),
@@ -98,6 +102,16 @@ const EventForm = () => {
             <option value={time}>{time} minutes</option>
           ))}
         </Select>
+        <FormLabel>Event Date</FormLabel>
+        <Stack direction="row" justifyContent="flex-start">
+          <DatePicker
+            showIcon
+            dateFormat="MMMM d, yyyy"
+            placeholderText="Click to select a date"
+            selected={date}
+            onChange={(date) => setDate(date)}
+          />
+        </Stack>
         <FormLabel>Event Type</FormLabel>
         <Select onChange={(e) => setType(e.target.value)}>
           <option value="One-on-One">One-on-One</option>

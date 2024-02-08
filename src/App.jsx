@@ -22,9 +22,9 @@ function App() {
       ) : (
         <Navbar handleLog={handleLog} />
       )}
-      {log ? <Dashboard /> : null}
+      {/* {log ? <Dashboard /> : null} */}
       <GlobalContext.Provider value={{ handleLog }}>
-        <MainRoutes />
+        <MainRoutes log={log} />
       </GlobalContext.Provider>
 
       {!log ? <Footer /> : null}
