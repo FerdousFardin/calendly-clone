@@ -23,17 +23,23 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogOverlay,
+  AlertIcon,
   Box,
   Button,
   Heading,
+  Highlight,
+  Icon,
+  Input,
   Spinner,
   Stack,
   Text,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react";
 import { auth } from "../../firebase/Firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Dashboard } from "../User Dashboard/Dashboard.jsx";
+import { WarningIcon } from "@chakra-ui/icons";
 
 const locales = {
   "en-US": "date-fns/locale/en-US",
@@ -54,16 +60,30 @@ const Calendar2 = () => {
   const [loading, setLoading] = useState(true);
   const [role, setRole] = useState("");
   const [selectedEvent, setSelectedEvent] = useState({});
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const {
+    isOpen: detailsIsOpen,
+    onOpen: detailsOnOpen,
+    onClose: detailsOnClose,
+  } = useDisclosure();
+  const {
+    isOpen: inputIsOpen,
+    onOpen: inputOnOpen,
+    onClose: inputOnClose,
+  } = useDisclosure();
   const cancelRef = useRef();
+  const toast = useToast();
 
   const getDetails = async () => {
     const roleFrmStrg = await AsyncLocalStorage.getItem("Role");
-    const eventsData = await fetch(`${import.meta.env.VITE_APP_API}/schedules`);
-    const events = await eventsData.json();
 
-    setAllEventsObj(events);
-    setRole(roleFrmStrg);
+    const url =
+      roleFrmStrg === "Teacher"
+        ? `${import.meta.env.VITE_APP_API}/schedules?email=${user?.email}`
+        : `${import.meta.env.VITE_APP_API}/schedules`;
+
+    const eventsData = await fetch(url);
+
+    const events = await eventsData.json();
 
     const convertedEvents = events.map((eventObj) => ({
       start: new Date(eventObj.schedule.start),
@@ -73,6 +93,8 @@ const Calendar2 = () => {
       scheduledTo: eventObj.scheduledTo ? eventObj.scheduledTo : "",
     }));
 
+    setAllEventsObj(events);
+    setRole(roleFrmStrg);
     setAllEvents(convertedEvents);
   };
 
@@ -128,7 +150,7 @@ const Calendar2 = () => {
     );
     const data = await query.json();
     if (data.acknowledged) {
-      onClose();
+      detailsOnClose();
       setSelectedEvent({});
       setLoading(true);
       getAllDetails();
@@ -153,18 +175,24 @@ const Calendar2 = () => {
     });
     const data = await query.json();
     if (data.acknowledged) {
-      onClose();
+      detailsOnClose();
       setSelectedEvent({});
       setLoading(true);
       getAllDetails();
     }
   };
 
-  const handleSchedule = async (id) => {
+  const handleSchedule = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+
+    const eventName = form.eventName.value;
+
     const updatedSchedule = {
       ...selectedEvent,
       schedule: {
         ...selectedEvent.schedule,
+        title: eventName,
         isAvailable: false,
         scheduledTo: user?.email,
       },
@@ -178,7 +206,8 @@ const Calendar2 = () => {
     });
     const data = await query.json();
     if (data.acknowledged) {
-      onClose();
+      detailsOnClose();
+      inputOnClose();
       setSelectedEvent({});
       setLoading(true);
       getAllDetails();
@@ -187,26 +216,33 @@ const Calendar2 = () => {
 
   const handleSelectSlot = async ({ start, end }) => {
     if (role === "Teacher") {
-      const title = window.prompt("New Event Name");
-      if (title) {
-        const newEvent = {
-          start,
-          end,
-          title: `${title}-${user && user.displayName}`,
-          isAvailable: true,
-          scheduledTo: "",
-        };
+      const newEvent = {
+        start,
+        end,
+        title: "",
+        isAvailable: true,
+        scheduledTo: "",
+      };
 
-        const response = await handleSave(user.email, newEvent);
-        if (response.acknowledged) {
-          setLoading(true);
-          getAllDetails();
-        } else
-          window.alert("Couldn't save event in the database. Please try again");
-      }
-    } else {
-      window.alert("You are not authorized to edit this calender");
-    }
+      const response = await handleSave(user.email, newEvent);
+
+      if (response.acknowledged) {
+        setLoading(true);
+        getAllDetails();
+      } else
+        toast({
+          title: "Couldn't save event in the database. Please try again",
+          status: "error",
+          isClosable: true,
+          duration: 5000,
+        });
+    } else
+      toast({
+        title: "You are not authorized to edit this calender",
+        status: "error",
+        isClosable: true,
+        duration: 2000,
+      });
   };
 
   const handleSelectEvent = (event) => {
@@ -228,7 +264,7 @@ const Calendar2 = () => {
       } else return null;
     });
     setSelectedEvent(findEvent);
-    onOpen();
+    detailsOnOpen();
   };
 
   const { defaultDate, scrollToTime } = useMemo(
@@ -293,8 +329,8 @@ const Calendar2 = () => {
           <AlertDialog
             motionPreset="slideInBottom"
             leastDestructiveRef={cancelRef}
-            onClose={onClose}
-            isOpen={isOpen}
+            onClose={detailsOnClose}
+            isOpen={detailsIsOpen}
             isCentered
           >
             <AlertDialogOverlay />
@@ -304,13 +340,23 @@ const Calendar2 = () => {
               <AlertDialogCloseButton />
               <AlertDialogBody>
                 <Stack gap={4} justifyContent={"start"}>
-                  <Text>
+                  <Text display="flex" gap={2}>
                     <strong>Event Title: </strong>
                     {selectedEvent &&
                     selectedEvent.schedule &&
-                    selectedEvent.schedule.title
-                      ? selectedEvent.schedule.title
-                      : ""}
+                    selectedEvent.schedule.title ? (
+                      selectedEvent.schedule.title
+                    ) : (
+                      <Box
+                        color="yellow.500"
+                        display="flex"
+                        gap={1}
+                        alignItems="center"
+                      >
+                        <WarningIcon />
+                        <p>No title available</p>
+                      </Box>
+                    )}
                   </Text>
                   <Text>
                     <strong>Event Details</strong>: From{" "}
@@ -337,7 +383,7 @@ const Calendar2 = () => {
                 </Stack>
               </AlertDialogBody>
               <AlertDialogFooter>
-                <Button ref={cancelRef} onClick={onClose}>
+                <Button ref={cancelRef} onClick={detailsOnClose}>
                   Close
                 </Button>
 
@@ -372,15 +418,45 @@ const Calendar2 = () => {
                 ) : null}
 
                 {role === "Student" && selectedEvent?.schedule?.isAvailable && (
-                  <Button
-                    colorScheme="blue"
-                    ml={3}
-                    onClick={() => handleSchedule(selectedEvent._id)}
-                  >
+                  <Button colorScheme="blue" ml={3} onClick={inputOnOpen}>
                     Schedule
                   </Button>
                 )}
               </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={inputOnClose}
+            isOpen={inputIsOpen}
+            isCentered
+          >
+            <AlertDialogOverlay />
+
+            <AlertDialogContent>
+              <AlertDialogHeader>Enter Name</AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <form onSubmit={(e) => handleSchedule(e)}>
+                <AlertDialogBody>
+                  <Stack gap={4} justifyContent={"start"}>
+                    <Input name="eventName" placeholder="Enter Event Name" />
+                  </Stack>
+                </AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button
+                    colorScheme="red"
+                    ref={cancelRef}
+                    onClick={inputOnClose}
+                  >
+                    Cancel
+                  </Button>
+
+                  <Button colorScheme="green" ml={3} type="submit">
+                    Done
+                  </Button>
+                </AlertDialogFooter>
+              </form>
             </AlertDialogContent>
           </AlertDialog>
         </div>

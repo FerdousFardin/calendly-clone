@@ -94,13 +94,12 @@ export default function RegisterBox({
                 : "https://i.postimg.cc/50wYCSMc/female.png",
           })
             .then(async () => {
-              // const resPH = await postPHEvent();
               const addUserDB = await postUserAdd({
                 email: email,
                 password: password,
                 role,
               });
-              if (resPH.acknowledged && addUserDB.acknowledged) {
+              if (addUserDB.acknowledged) {
                 handleLog(true);
                 navigate("/userevent/userhome/eventtype");
               }

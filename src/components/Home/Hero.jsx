@@ -45,32 +45,12 @@ export default function Hero() {
 
   const [user] = useAuthState(auth);
 
-  const postPHEvent = async () => {
-    const data = await fetch(import.meta.env.VITE_APP_API + "/event", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        heading: "Getting Started",
-        time: "5 min",
-        type: "Tutorial",
-        email: user && user.email,
-      }),
-    });
-    const result = await data.json();
-    return result;
-  };
-
   const loginWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(async (res) => {
         handleLog(true);
         onClose();
-        const resPH = await postPHEvent();
-        console.log(resPH.acknowledged);
         navigate("/userevent/userhome/eventtype");
       })
       .catch((err) => {

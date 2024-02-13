@@ -20,6 +20,7 @@ import { auth } from "../../firebase/Firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import { Dashboard } from "./Dashboard.jsx";
+import { WarningIcon } from "@chakra-ui/icons";
 
 const ScheduledEvents = ({ isVisible = true }) => {
   const [user] = useAuthState(auth);
@@ -147,26 +148,31 @@ const ScheduledEvents = ({ isVisible = true }) => {
                 const { _id, schedule, email } = event;
                 return (
                   <Tr key={_id}>
-                    <Td>{schedule.title}</Td>
+                    <Td>
+                      {schedule?.title ? (
+                        schedule.title
+                      ) : (
+                        <Box
+                          color="yellow.500"
+                          display="flex"
+                          gap={1}
+                          alignItems="center"
+                        >
+                          <WarningIcon />
+                          <p>No title</p>
+                        </Box>
+                      )}
+                    </Td>
                     <Td>{email}</Td>
                     <Td>
                       {schedule.isAvailable ? (
-                        <Text color="lightgreen">Available</Text>
+                        <Text color="green.300">Available</Text>
                       ) : (
-                        <Text color="lightgray">Not Available</Text>
+                        <Text color="gray.400">Not Available</Text>
                       )}
                     </Td>
                     <Td>
                       <Stack flexDirection="row">
-                        {schedule.isAvailable === false && (
-                          <Button
-                            onClick={() => handleCancel(event)}
-                            size="sm"
-                            colorScheme="teal"
-                          >
-                            Cancel Schedule
-                          </Button>
-                        )}
                         {role === "Teacher" && (
                           <Button
                             onClick={() => handleDelete(_id)}
@@ -176,6 +182,17 @@ const ScheduledEvents = ({ isVisible = true }) => {
                             Delete
                           </Button>
                         )}
+
+                        <Button
+                          isDisabled={schedule.isAvailable}
+                          _disabled={{ bg: "gray", cursor: "not-allowed" }}
+                          _hover={schedule.isAvailable ? { bg: "gray" } : null}
+                          onClick={() => handleCancel(event)}
+                          size="sm"
+                          colorScheme="teal"
+                        >
+                          Cancel Schedule
+                        </Button>
                       </Stack>
                     </Td>
                   </Tr>
