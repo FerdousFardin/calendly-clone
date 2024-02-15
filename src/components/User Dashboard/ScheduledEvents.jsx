@@ -66,6 +66,7 @@ const ScheduledEvents = ({ isVisible = true }) => {
       ...selectedEvent,
       schedule: {
         ...selectedEvent.schedule,
+        title: "",
         isAvailable: true,
         scheduledTo: "",
       },
@@ -145,7 +146,7 @@ const ScheduledEvents = ({ isVisible = true }) => {
             </Thead>
             <Tbody>
               {allEventsObj.map((event) => {
-                const { _id, schedule, email } = event;
+                const { _id, schedule, name } = event;
                 return (
                   <Tr key={_id}>
                     <Td>
@@ -163,7 +164,7 @@ const ScheduledEvents = ({ isVisible = true }) => {
                         </Box>
                       )}
                     </Td>
-                    <Td>{email}</Td>
+                    <Td>{name}</Td>
                     <Td>
                       {schedule.isAvailable ? (
                         <Text color="green.300">Available</Text>

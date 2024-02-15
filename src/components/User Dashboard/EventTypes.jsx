@@ -47,7 +47,6 @@ const EventTypes = () => {
   };
 
   const handleDelete = async () => {
-    // console.log(selectedId);
     const res = await fetch(
       import.meta.env.VITE_APP_API + "/event?id=" + selectedId,
       {

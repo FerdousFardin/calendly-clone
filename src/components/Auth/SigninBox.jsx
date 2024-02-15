@@ -62,7 +62,7 @@ export default function SigninBox({
           setError("");
 
           const findUser = await getUser(email, role);
-          console.log({ findUser });
+
           if (findUser && findUser.result) {
             await AsyncLocalStorage.setItem("Role", role);
             onClose();

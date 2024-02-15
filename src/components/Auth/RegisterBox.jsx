@@ -23,6 +23,7 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
+import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth } from "../../firebase/Firebase";
 import { useNavigate } from "react-router-dom";
@@ -100,6 +101,7 @@ export default function RegisterBox({
                 role,
               });
               if (addUserDB.acknowledged) {
+                await AsyncLocalStorage.setItem("Role", role);
                 handleLog(true);
                 navigate("/userevent/userhome/eventtype");
               }

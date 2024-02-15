@@ -14,7 +14,7 @@ function App() {
     setLog(isLoggedIn);
   };
 
-  console.log("log", log);
+  // console.log("log", log);
   return (
     <div className="App">
       {log ? (

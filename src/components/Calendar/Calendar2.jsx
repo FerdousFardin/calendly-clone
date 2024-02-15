@@ -73,6 +73,8 @@ const Calendar2 = () => {
   const cancelRef = useRef();
   const toast = useToast();
 
+  console.log(role);
+
   const getDetails = async () => {
     const roleFrmStrg = await AsyncLocalStorage.getItem("Role");
 
@@ -86,9 +88,10 @@ const Calendar2 = () => {
     const events = await eventsData.json();
 
     const convertedEvents = events.map((eventObj) => ({
+      id: eventObj._id,
       start: new Date(eventObj.schedule.start),
       end: new Date(eventObj.schedule.end),
-      title: eventObj.schedule.title ? eventObj.schedule.title : "",
+      title: eventObj.schedule.title ? eventObj.schedule.title : eventObj.name,
       isAvailable: eventObj.schedule.isAvailable,
       scheduledTo: eventObj.scheduledTo ? eventObj.scheduledTo : "",
     }));
@@ -130,6 +133,7 @@ const Calendar2 = () => {
       },
       body: JSON.stringify({
         email,
+        name: user?.displayName,
         schedule,
         isAvailable: true,
       }),
@@ -162,6 +166,7 @@ const Calendar2 = () => {
       ...selectedEvent,
       schedule: {
         ...selectedEvent.schedule,
+        title: "",
         isAvailable: true,
         scheduledTo: "",
       },
@@ -246,24 +251,11 @@ const Calendar2 = () => {
   };
 
   const handleSelectEvent = (event) => {
-    const convertedEvent = {
-      title: event.title,
-      start: event.start.toISOString(),
-      end: event.end.toISOString(),
-    };
-    // console.log({ convertedEvent });
-    const findEvent = allEventsObj.find((eventObj) => {
-      const e = eventObj.schedule;
+    const selctdEvnt = allEventsObj.find(
+      (eventObj) => event.id === eventObj._id
+    );
 
-      if (
-        e.start === convertedEvent.start &&
-        e.end === convertedEvent.end &&
-        e.title === event.title
-      ) {
-        return eventObj;
-      } else return null;
-    });
-    setSelectedEvent(findEvent);
+    setSelectedEvent(selctdEvnt);
     detailsOnOpen();
   };
 
@@ -344,7 +336,7 @@ const Calendar2 = () => {
                     <strong>Event Title: </strong>
                     {selectedEvent &&
                     selectedEvent.schedule &&
-                    selectedEvent.schedule.title ? (
+                    selectedEvent.schedule?.title ? (
                       selectedEvent.schedule.title
                     ) : (
                       <Box
