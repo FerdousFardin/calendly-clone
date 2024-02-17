@@ -64,7 +64,8 @@ export default function SigninBox({
           const findUser = await getUser(email, role);
 
           if (findUser && findUser.result) {
-            await AsyncLocalStorage.setItem("Role", role);
+            const res = await AsyncLocalStorage.setItem("Role", role);
+            console.log(res);
             onClose();
             handleLog(true);
             navigate("/userevent/userhome/eventtype");

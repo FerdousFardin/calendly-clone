@@ -135,7 +135,6 @@ const Calendar2 = () => {
         email,
         name: user?.displayName,
         schedule,
-        isAvailable: true,
       }),
     });
     const data = await query.json();
@@ -266,6 +265,7 @@ const Calendar2 = () => {
     }),
     []
   );
+
   if (loading)
     return (
       <Box

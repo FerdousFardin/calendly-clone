@@ -30,6 +30,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { GlobalContext } from "../../App";
+import AsyncLocalStorage from "@createnextapp/async-local-storage";
 
 export default function Hero() {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -45,13 +46,26 @@ export default function Hero() {
 
   const [user] = useAuthState(auth);
 
-  const loginWithGoogle = () => {
+  const getUser = async (email, role) => {
+    const query = await fetch(
+      import.meta.env.VITE_APP_API + "/user" + `?email=${email}&role=${role}`
+    );
+    const res = await query.json();
+    return res;
+  };
+
+  const loginWithGoogle = (role) => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then(async (res) => {
-        handleLog(true);
-        onClose();
-        navigate("/userevent/userhome/eventtype");
+        const user = await getUser(res?.user?.email, role);
+
+        if (user && user.result) {
+          await AsyncLocalStorage.setItem("Role", role);
+          handleLog(true);
+          onClose();
+          navigate("/userevent/userhome/eventtype");
+        } else throw new Error({ code: "User Not Found" });
       })
       .catch((err) => {
         setError(err);
