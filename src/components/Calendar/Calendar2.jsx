@@ -26,10 +26,10 @@ import {
   AlertIcon,
   Box,
   Button,
+  FormLabel,
   Heading,
-  Highlight,
-  Icon,
   Input,
+  Select,
   Spinner,
   Stack,
   Text,
@@ -40,6 +40,7 @@ import { auth } from "../../firebase/Firebase.js";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Dashboard } from "../User Dashboard/Dashboard.jsx";
 import { WarningIcon } from "@chakra-ui/icons";
+import { times } from "../../data/data";
 
 const locales = {
   "en-US": "date-fns/locale/en-US",
@@ -55,6 +56,8 @@ const localizer = dateFnsLocalizer({
 
 const Calendar2 = () => {
   const [user] = useAuthState(auth);
+  const [time, setTime] = useState(5);
+  const [type, setType] = useState("One-on-One");
   const [allEventsObj, setAllEventsObj] = useState([]);
   const [allEvents, setAllEvents] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -201,15 +204,42 @@ const Calendar2 = () => {
         scheduledTo: user?.email,
       },
     };
-    const query = await fetch(`${import.meta.env.VITE_APP_API}/schedules`, {
+    const date = new Date(selectedEvent.schedule.end);
+
+    const formattedDate = format(
+      date,
+      "EEE MMM dd yyyy HH:mm:ss 'GMT'xxx '('zzz')'",
+      { timeZone: "Asia/Dhaka" }
+    );
+
+    const query1 = await fetch(`${import.meta.env.VITE_APP_API}/schedules`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedSchedule),
     });
-    const data = await query.json();
-    if (data.acknowledged) {
+
+    const data1 = await query1.json();
+
+    const query2 = await fetch(import.meta.env.VITE_APP_API + "/event", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        heading: eventName,
+        time: `${time} min`,
+        date: formattedDate,
+        type,
+        email: user && user.email,
+      }),
+    });
+
+    const data2 = await query2.json();
+
+    if (data1.acknowledged && data2.acknowledged) {
       detailsOnClose();
       inputOnClose();
       setSelectedEvent({});
@@ -427,12 +457,36 @@ const Calendar2 = () => {
             <AlertDialogOverlay />
 
             <AlertDialogContent>
-              <AlertDialogHeader>Enter Name</AlertDialogHeader>
+              <AlertDialogHeader>Enter Schedule Details</AlertDialogHeader>
               <AlertDialogCloseButton />
               <form onSubmit={(e) => handleSchedule(e)}>
                 <AlertDialogBody>
                   <Stack gap={4} justifyContent={"start"}>
-                    <Input name="eventName" placeholder="Enter Event Name" />
+                    <Box>
+                      <FormLabel>Event Name</FormLabel>
+                      <Input
+                        required
+                        boxShadow="none"
+                        name="eventName"
+                        placeholder="Enter Event Name"
+                      />
+                    </Box>
+                    <Box>
+                      <FormLabel>Event Type</FormLabel>
+                      <Select onChange={(e) => setType(e.target.value)}>
+                        <option value="One-on-One">One-on-One</option>
+                        <option value="Group">Group</option>
+                        <option value="Collective">Collective</option>
+                      </Select>
+                    </Box>
+                    <Box>
+                      <FormLabel>Duration</FormLabel>
+                      <Select onChange={(e) => setTime(e.target.value)}>
+                        {times.map((time) => (
+                          <option value={time}>{time} minutes</option>
+                        ))}
+                      </Select>
+                    </Box>
                   </Stack>
                 </AlertDialogBody>
                 <AlertDialogFooter>

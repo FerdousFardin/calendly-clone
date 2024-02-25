@@ -68,7 +68,7 @@ export function Dashboard() {
             <HStack as={"nav"} spacing={4} justifyContent={"space-between"}>
               <Link to={"/userevent/userhome/eventtype"}>
                 <Button
-                  isActive={activeStatus("eventtype")}
+                  isActive={activeStatus("/event")}
                   bg={"none"}
                   fontWeight={"semibold"}
                 >
