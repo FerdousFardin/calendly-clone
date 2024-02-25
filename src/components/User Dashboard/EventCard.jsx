@@ -95,6 +95,7 @@ export default function EventCard({ event, handleOpen }) {
           <Heading fontSize={"xl"} fontWeight={600}>
             {event && event.heading}
           </Heading>
+          <Text>{event && event.details ? event.details : ""}</Text>
           <Text fontWeight={400} color={"gray.500"} mb={4}>
             {event && event.time},{" "}
             {event && event.date ? convertDetailedTime(event.date) + "," : ""}{" "}

@@ -33,6 +33,7 @@ import {
   Spinner,
   Stack,
   Text,
+  Textarea,
   useDisclosure,
   useToast,
 } from "@chakra-ui/react";
@@ -194,6 +195,7 @@ const Calendar2 = () => {
     const form = e.target;
 
     const eventName = form.eventName.value;
+    const details = form.details.value;
 
     const updatedSchedule = {
       ...selectedEvent,
@@ -230,6 +232,7 @@ const Calendar2 = () => {
       },
       body: JSON.stringify({
         heading: eventName,
+        details,
         time: `${time} min`,
         date: formattedDate,
         type,
@@ -486,6 +489,10 @@ const Calendar2 = () => {
                           <option value={time}>{time} minutes</option>
                         ))}
                       </Select>
+                    </Box>
+                    <Box>
+                      <FormLabel>Details</FormLabel>
+                      <Textarea required name="details" />
                     </Box>
                   </Stack>
                 </AlertDialogBody>
