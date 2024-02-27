@@ -122,12 +122,12 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 </Text>
               </Link>
               <Divider />
-              <Link to="/pricing">
+              {/* <Link to="/pricing">
                 {" "}
                 <Text cursor={"pointer"} pl={"18px"}>
                   Pricing
                 </Text>
-              </Link>
+              </Link> */}
               <Accordion
                 allowToggle
                 width={"100%"}
@@ -245,14 +245,14 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
           <Link to="/individuals">
             <Text
               fontSize="1rem"
-              fontWeight="700"
+              fontWeight="800"
               _hover={{ color: "#006BFF" }}
             >
               Individuals
             </Text>
           </Link>
 
-          <Link to="/pricing">
+          {/* <Link to="/pricing">
             <Text
               fontSize="1rem"
               fontWeight="700"
@@ -260,7 +260,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
             >
               Pricing
             </Text>
-          </Link>
+          </Link> */}
           <Link to="/resources">
             <Text>
               <Resources />

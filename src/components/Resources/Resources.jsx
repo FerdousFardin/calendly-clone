@@ -29,7 +29,7 @@ export default function Resources() {
         borderRadius={5}
         color={isOpen ? "#006BFF" : "#000000"}
         aria-label="Courses"
-        fontWeight="700"
+        fontWeight="800"
         fontSize={16}
         onMouseEnter={onOpen}
         onMouseLeave={onClose}
@@ -75,7 +75,7 @@ export default function Resources() {
               <GridItem w="100%" h="180" marginTop={50}>
                 <Icon as={FcAbout} fontSize={35} />
                 <h1 className={style.gridmargin}>About</h1>
-                <p className={style.gridmarginP}>Learn who we are</p>
+                <p className={style.gridmarginP}>Learn who we are and what this <br/> website is about</p>
               </GridItem>
               <GridItem w="100%" h="170" marginTop={50}>
                 <Icon as={FcGenealogy} fontSize={25} />
@@ -88,25 +88,14 @@ export default function Resources() {
               <GridItem w="100%" h="170">
                 <Icon as={FcGenericSortingAsc} fontSize={25} />
                 <h4 className={style.gridmargin}>Resource Center</h4>
-                <p className={style.gridmarginP}>Explore all of ous resources</p>
+                <p className={style.gridmarginP}>Explore all of our resources</p>
               </GridItem>
               <GridItem w="100%" h="170">
                 <Icon as={FcNeutralTrading} fontSize={25} />
                 <h4 className={style.gridmargin}>Help Center</h4>
-                <p className={style.gridmarginP}>Explain how to use Scheduler</p>
+                <p className={style.gridmarginP}>Explained overview of how to use <br/> Scheduler</p>
               </GridItem>
 
-              <GridItem w="100%" h="160">
-                <Icon as={FcElectroDevices} fontSize={25} />
-                <h4 className={style.gridmargin}>Blog</h4>
-                <p className={style.gridmarginP}>
-                  Thoughts news and best practices.
-                </p>
-              </GridItem>
-              <GridItem>
-                <h1 className={style.bottomh1}>Partners</h1>
-                <h1 className={style.bottomh1}>Developers</h1>
-              </GridItem>
             </Grid>
           </Box>
         </Flex>

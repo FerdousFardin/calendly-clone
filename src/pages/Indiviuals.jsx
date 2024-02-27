@@ -22,18 +22,6 @@ const Indiviuals = () => {
               <br /> and accomplish goals.
             </p>
           </Box>
-
-          <Button
-            bg={"#006bff"}
-            size="lg"
-            borderRadius={"25px"}
-            color="white"
-            marginTop={"10%"}
-            textAlign="center"
-            marginLeft={"2%"}
-          >
-            Sign up for free
-          </Button>
         </Box>
 
         <Box className={styles.div3}>
@@ -56,8 +44,8 @@ const Indiviuals = () => {
         </Box>
 
         <Box className={styles.box2div2}>
-          <h1 className={styles.box2h1}>A CURATED CALENDAR</h1>
-          <Heading className={styles.box2h1size}>The genius way to</Heading>
+          <h1 className={styles.box2h1}>AN USEFUL CALENDAR</h1>
+          <Heading className={styles.box2h1size}>For Tracking The Schedule</Heading>
 
           <Box className={styles.p1}>
             <p>
@@ -69,29 +57,23 @@ const Indiviuals = () => {
             </p>
           </Box>
 
-          <Box className={styles.box2a}>
-            <a href="/">Learn More </a>
-          </Box>
         </Box>
       </Box>
 
       <Box className={styles.div1}>
         <Box className={styles.div2}>
-          <h1 className={styles.box2h1}>SCHEDULING AT SCALE</h1>
-          <Heading className={styles.box2h1size}>Retain more clients</Heading>
+          <h1 className={styles.box2h1}>SCHEDULING AT TIME</h1>
+          <Heading className={styles.box2h1size}>Get more clients</Heading>
 
           <Box className={styles.p1}>
             <p>
               Happy clients are long-term clients. With Scheduler,
-              prospects can schedule with you instantly so no one slips
+              everyone can schedule with you instantly so no one slips
               through the cracks, and everything about your interaction
               is personal, professional, and respectful of their time.
             </p>
           </Box>
 
-          <Box className={styles.box2a}>
-            <a href="/">Learn More </a>
-          </Box>
         </Box>
 
         <Box className={styles.div3}>

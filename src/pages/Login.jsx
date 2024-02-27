@@ -42,11 +42,11 @@ import {
                   left: 0,
                   zIndex: -1,
                 }}>
-                Wellcome back
+                Welcome back
               </Text>
               <br />
               <Text color={'blue.900'} fontSize={'1.3em'} fontWeight={'bold'}>
-                to <Text as={'span'} color={'blue.400'} fontSize={'1.3em'}>calendly</Text>
+                to <Text as={'span'} color={'blue.400'} fontSize={'1.3em'}>Scheduler</Text>
               </Text>
             </Heading>
             <Text color={'gray.500'}fontSize={"1.2em"}>
