@@ -45,7 +45,6 @@ export function Dashboard() {
               <Button
                 bg={"none"}
                 fontWeight={"semibold"}
-                rightIcon={<MdOutlineKeyboardArrowDown size={40} />}
                 mr={80}
               >
                 <Menu>
@@ -56,7 +55,6 @@ export function Dashboard() {
                   </MenuButton>
                   <MenuList>
                     <MenuItem>
-                      <Box mr={4}>{/* <BsBoxArrowUpRight/>  */}</Box>
                       Help Center
                     </MenuItem>
                     <MenuItem>Chat With Us</MenuItem>

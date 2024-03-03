@@ -1,13 +1,11 @@
 import {
   Heading,
-  Avatar,
   Box,
   Center,
   Text,
   Stack,
   Button,
   Link,
-  Badge,
   useColorModeValue,
   Checkbox,
   Flex,
@@ -17,7 +15,7 @@ import {
   MenuItem,
   Switch,
 } from "@chakra-ui/react";
-import { BiCopy, BiNote } from "react-icons/bi";
+import { BiCopy} from "react-icons/bi";
 import { RiSettings2Fill, RiDeleteBin6Fill } from "react-icons/ri";
 import { MdOutlineKeyboardArrowDown, MdEdit } from "react-icons/md";
 import { colors } from "../../data/data";
@@ -65,29 +63,13 @@ export default function EventCard({ event, handleOpen }) {
                 </Box>
                 Edit
               </MenuItem>
-              <MenuItem>
-                <Box mr={2}>
-                  <BiNote />
-                </Box>
-                Add Internal Note
-              </MenuItem>
-              <MenuItem>
-                <Box mr={2}>
-                  <BiCopy />
-                </Box>
-                Clone
-              </MenuItem>
               <MenuItem onClick={() => handleOpen(event._id)}>
                 <Box mr={2}>
                   <RiDeleteBin6Fill />
                 </Box>
                 Delete
               </MenuItem>
-              <hr />
 
-              <MenuItem>
-                On/Off <Switch ml={"6rem"} />
-              </MenuItem>
             </MenuList>
           </Menu>
         </Flex>
@@ -101,10 +83,6 @@ export default function EventCard({ event, handleOpen }) {
             {event && event.date ? convertDetailedTime(event.date) + "," : ""}{" "}
             {event && event.type}
           </Text>
-
-          <Link href={"#"} color={"blue.500"}>
-            View booking page
-          </Link>
         </Box>
 
         <hr />
