@@ -32,7 +32,7 @@ export const Solution = () => {
         {SolutionCardsData.map((e)=>{
           return (
         <GridItem colSpan={{base:3,md:1}} key={e.heading}>
-            <SolutionCard logo={e.logo} heading={e.heading} text={e.text}/>
+            <SolutionCard  heading={e.heading} text={e.text}/>
          </GridItem>
           )
         })}

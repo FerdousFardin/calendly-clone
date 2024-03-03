@@ -7,7 +7,7 @@ import {
     useColorModeValue,
   } from '@chakra-ui/react';
   import { ChevronRightIcon } from '@chakra-ui/icons'
-  export default function SolutionCard({logo,heading,text}) {
+  export default function SolutionCard({heading,text}) {
     return (
       <Center py={8}>
         <Box
@@ -26,7 +26,6 @@ import {
               fontWeight={800}
               fontSize={'2em'}
               letterSpacing={1.1}>
-              <img src={logo} alt="" />
             </Text>
             <Heading
               color={useColorModeValue('gray.700', 'white')}

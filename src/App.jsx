@@ -2,7 +2,6 @@ import { createContext, useState } from "react";
 import "./App.css";
 import { Navbar } from "./components/Navbar/Navbar";
 import { MainRoutes } from "./pages/MainRoutes";
-import { Dashboard } from "./components/User Dashboard/Dashboard";
 import { Navbar as UserNavbar } from "./components/User Dashboard/UserNavbar";
 import Footer from "./components/Footer/Footer";
 
@@ -14,7 +13,6 @@ function App() {
     setLog(isLoggedIn);
   };
 
-  // console.log("log", log);
   return (
     <div className="App">
       {log ? (
@@ -22,9 +20,8 @@ function App() {
       ) : (
         <Navbar handleLog={handleLog} />
       )}
-      {/* {log ? <Dashboard /> : null} */}
-      <GlobalContext.Provider value={{ handleLog }}>
-        <MainRoutes log={log} />
+      <GlobalContext.Provider value={{ handleLog, log }}>
+        <MainRoutes/>
       </GlobalContext.Provider>
 
       {!log ? <Footer /> : null}
