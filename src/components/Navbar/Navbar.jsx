@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Flex, Spacer, useDisclosure, useToast } from "@chakra-ui/react";
 import { HStack, VStack, Button, Box, Image } from "@chakra-ui/react";
 import { Text } from "@chakra-ui/react";
-import "./Navbar.css";
 import { auth } from "../../firebase/Firebase";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { Divider } from "@chakra-ui/react";
@@ -77,7 +76,6 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
           await AsyncLocalStorage.setItem("Role", role);
           navigate("/userevent/userhome/eventtype");
         } else {
-          // sign;
           const resOut = await signOut();
 
           if (resOut) {
@@ -113,7 +111,6 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
           <DrawerHeader>Welcome to Scheduler</DrawerHeader>
 
           <DrawerBody>
-            {/* <Input placeholder='Type here...' /> */}
             <VStack fontWeight={"bold"} align={"left"}>
               <Link to="/individuals">
                 {" "}
@@ -122,12 +119,7 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                 </Text>
               </Link>
               <Divider />
-              {/* <Link to="/pricing">
-                {" "}
-                <Text cursor={"pointer"} pl={"18px"}>
-                  Pricing
-                </Text>
-              </Link> */}
+            
               <Accordion
                 allowToggle
                 width={"100%"}

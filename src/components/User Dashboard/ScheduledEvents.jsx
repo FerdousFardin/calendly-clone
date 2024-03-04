@@ -10,7 +10,6 @@ import {
   Tbody,
   Td,
   Text,
-  Tfoot,
   Th,
   Thead,
   Tr,

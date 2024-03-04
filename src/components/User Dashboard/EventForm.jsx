@@ -3,9 +3,7 @@ import {
   Button,
   Flex,
   Heading,
-  FormControl,
   FormLabel,
-  FormHelperText,
   Input,
   Textarea,
   Select,
@@ -109,7 +107,7 @@ const EventForm = () => {
             onChange={(e) => setHeading(e.target.value)}
             required
           />
-          {/* <FormHelperText>We'll never share your info.</FormHelperText> */}
+
           <FormLabel>Duration</FormLabel>
           <Select onChange={(e) => setTime(e.target.value)}>
             {times.map((time) => (

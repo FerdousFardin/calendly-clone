@@ -4,7 +4,6 @@ import {
   Flex,
   Avatar,
   HStack,
-  IconButton,
   Button,
   Menu,
   MenuButton,
@@ -13,15 +12,11 @@ import {
   MenuDivider,
   useDisclosure,
   useColorModeValue,
-  Stack,
-  Text,
   Image,
 } from "@chakra-ui/react";
 import AsyncLocalStorage from "@createnextapp/async-local-storage";
 import { FaUserAlt } from "react-icons/fa";
-import { ImCreditCard } from "react-icons/im";
 import { AiTwotoneCalendar, AiOutlineAppstore } from "react-icons/ai";
-import { MdPeople } from "react-icons/md";
 import { BsFillLockFill, BsLink45Deg, BsBoxArrowUpRight } from "react-icons/bs";
 import { IoIosLogOut } from "react-icons/io";
 import { MdOutlineKeyboardArrowDown, MdOutlineLiveHelp } from "react-icons/md";
@@ -29,8 +24,6 @@ import { Link, useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../../firebase/Firebase.js";
 import {
-  useSignInWithEmailAndPassword,
-  useSignInWithGoogle,
   useAuthState,
   useSignOut,
 } from "react-firebase-hooks/auth";
@@ -176,20 +169,6 @@ export function Navbar({ handleLog }) {
                     <AiTwotoneCalendar size={18} />
                   </Box>
                   Calender Connections
-                </MenuItem>
-
-                <MenuItem>
-                  <Box marginRight={3}>
-                    <BsLink45Deg size={18} />
-                  </Box>
-                  Share Your Link
-                </MenuItem>
-
-                <MenuItem>
-                  <Box marginRight={3}>
-                    <AiOutlineAppstore size={18} />
-                  </Box>
-                  Apps
                 </MenuItem>
 
                 <MenuDivider />

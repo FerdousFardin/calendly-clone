@@ -112,19 +112,6 @@ const EventTypes = () => {
                 + New Event Type
               </Button>
             </Link>
-            <Menu>
-              <MenuButton as={Button} border={"none"} bg={"none"}>
-                <RiSettings2Fill />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>
-                  <Box mr={2}>
-                    <BiLink />
-                  </Box>
-                  Copy Link
-                </MenuItem>
-              </MenuList>
-            </Menu>
           </Flex>
         </Flex>
         <hr />

@@ -13,7 +13,6 @@ import {
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import {
   FcAbout,
-  FcElectroDevices,
   FcGenealogy,
   FcGenericSortingAsc,
   FcNeutralTrading,
@@ -28,7 +27,6 @@ export default function Resources() {
         border={"none"}
         borderRadius={5}
         color={isOpen ? "#006BFF" : "#000000"}
-        aria-label="Courses"
         fontWeight="800"
         fontSize={16}
         onMouseEnter={onOpen}
