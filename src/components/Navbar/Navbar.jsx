@@ -142,14 +142,14 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
                     <Link to="/about">
                       {" "}
                       <Text cursor={"pointer"} pl={"18px"}>
-                        About
+                        About Us
                       </Text>
                     </Link>
                     <br />
                     <Link to="/customer">
                       {" "}
                       <Text cursor={"pointer"} pl={"18px"}>
-                        Customer
+                        Customer Review
                       </Text>
                     </Link>
                   </AccordionPanel>
@@ -244,19 +244,9 @@ export const Navbar = ({ handleLog, resolveTrue }) => {
             </Text>
           </Link>
 
-          {/* <Link to="/pricing">
-            <Text
-              fontSize="1rem"
-              fontWeight="700"
-              _hover={{ color: "#006BFF" }}
-            >
-              Pricing
-            </Text>
-          </Link> */}
           <Link to="/resources">
             <Text>
               <Resources />
-              {/* <ChevronDownIcon display={{ base: "none", lg: "inline" }} /> */}
             </Text>
           </Link>
         </HStack>

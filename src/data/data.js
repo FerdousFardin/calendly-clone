@@ -5,7 +5,7 @@ export const SolutionCardsData = [
   },
   {
     heading: "Customer Success",
-    text: "Offer exceptional support: Your clients will be delighted with one-click scheduling and increased responsiveness. ",
+    text: "Offer exceptional support: Your clients will be delighted with one-click scheduling and increased more responsiveness. ",
   },
   {
     heading: "Information Technology",

@@ -6,7 +6,6 @@ import { Meeting } from "../components/Home/Meeting";
 import { MobileBar } from "../components/Home/MobileBar";
 import { OnDemand } from "../components/Home/OnDemand";
 import { Reminder } from "../components/Home/Reminder";
-import { RulesCard } from "../components/Home/RulesCard";
 import { Solution } from "../components/Home/Solution";
 import ScheduledEvents from "../components/User Dashboard/ScheduledEvents";
 import { Box, Divider, Heading } from "@chakra-ui/react";
@@ -25,7 +24,6 @@ export const Home = ({ log }) => {
         </Box>
       )}
       <Divider />
-      <RulesCard />
       <Meeting />
       <Solution />
       <DoMore />

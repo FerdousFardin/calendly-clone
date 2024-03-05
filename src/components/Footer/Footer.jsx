@@ -74,16 +74,16 @@ import {
               
 
               <Stack direction={'row'} spacing={6} marginBottom={"10px"}>
-                <SocialButton label={'Twitter'} href={'#'}>
+                <SocialButton label={'Twitter'} href={'https://twitter.com/?lang=en'}>
                   <FaTwitter />
                 </SocialButton>
-                <SocialButton label={'YouTube'} href={'#'}>
+                <SocialButton label={'YouTube'} href={'https://www.youtube.com/'}>
                   <FaYoutube />
                 </SocialButton>
                 <SocialButton label={'Instagram'} href={'#'}>
                   <FaInstagram />
                 </SocialButton>
-                <SocialButton label={'Instagram'} href={'#'}>
+                <SocialButton label={'Linkedin'} href={'#'}>
                   <FaLinkedinIn />
                 </SocialButton>
               </Stack>
@@ -102,13 +102,9 @@ import {
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Solutions</Heading></ListHeader>
               <Link href={'#'}>Customer Support</Link>
-              <Link href={'#'}>Sales</Link>
+              <Link href={'#'}>Customer Reviews</Link>
             </Stack>
-            <Stack align={'flex-start'} gap={3}>
-              <ListHeader><Heading size={"md"}>Popular Features</Heading></ListHeader>
-              <Link href={'#'}>Embeded Scheduler</Link>
-              <Link href={'#'}>Sending Notifications</Link>
-            </Stack>
+            
             <Stack align={'flex-start'} gap={3}>
               <ListHeader><Heading size={"md"}>Support</Heading></ListHeader>
               <Link href={'#'}>Help Center</Link>

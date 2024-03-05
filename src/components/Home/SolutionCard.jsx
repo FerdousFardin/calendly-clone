@@ -6,7 +6,6 @@ import {
     Stack,
     useColorModeValue,
   } from '@chakra-ui/react';
-  import { ChevronRightIcon } from '@chakra-ui/icons'
   export default function SolutionCard({heading,text}) {
     return (
       <Center py={8}>
@@ -33,14 +32,9 @@ import {
               fontFamily={'body'}>
               {heading}
             </Heading>
-            <Text color={'gray.500'} fontSize={'xl'} textAlign={"left"} pr={"10px"}>
+            <Text color={'gray.500'} fontSize={'xl'} textAlign={"justify"} pr={"10px"}>
             {text}
             </Text>
-            <Heading>
-                <Text fontSize={'xl'} color={'blue.400'} _hover={{color:"black"}}>
-                    Learn more <ChevronRightIcon/>
-                </Text>
-            </Heading>
           </Stack>
         </Box>
       </Center>

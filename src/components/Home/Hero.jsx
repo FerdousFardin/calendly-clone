@@ -3,7 +3,6 @@ import {
   Stack,
   Flex,
   Box,
-  Input,
   Heading,
   Text,
   Button,
@@ -41,8 +40,6 @@ export default function Hero() {
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
-
-  const finalRef = useRef(null);
 
   const [user] = useAuthState(auth);
 

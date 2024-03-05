@@ -1,4 +1,4 @@
-import { Heading, VStack, Text, Image } from "@chakra-ui/react";
+import { Heading, VStack, Text } from "@chakra-ui/react";
 import React from "react";
 
 export const BrandSlider = () => {
