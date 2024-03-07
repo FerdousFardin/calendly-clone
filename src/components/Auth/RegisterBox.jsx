@@ -158,7 +158,7 @@ export default function RegisterBox({
                 <FormLabel>User Email</FormLabel>
                 <Input
                   name="email"
-                  placeholder="abc@gmail.com"
+                  // placeholder="abc@gmail.com"
                   _invalid={{ borderColor: "red.500", bgColor: "red.50" }}
                   _placeholder={{ color: "gray.500" }}
                   type="email"
