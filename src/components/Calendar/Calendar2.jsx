@@ -75,8 +75,6 @@ const Calendar2 = () => {
   const cancelRef = useRef();
   const toast = useToast();
 
-  console.log(role);
-
   const getDetails = async () => {
     const roleFrmStrg = await AsyncLocalStorage.getItem("Role");
 
